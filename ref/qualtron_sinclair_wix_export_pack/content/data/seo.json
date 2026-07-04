@@ -1,0 +1,82 @@
+{
+  "site_name": "Qualtron Sinclair",
+  "homepage_title": "Qualtron Sinclair | asset manager",
+  "tagline": "We Design the Structure Behind Growth",
+  "detected_pages": [
+    {
+      "title": "About",
+      "path": "/",
+      "source_url": "https://www.qualtronsinclair.com/"
+    },
+    {
+      "title": "Hakkımızda",
+      "path": "/about-5",
+      "source_url": "https://www.qualtronsinclair.com/about-5"
+    },
+    {
+      "title": "Legal & Compliance",
+      "path": "/legal-compliance",
+      "source_url": "https://www.qualtronsinclair.com/legal-compliance"
+    },
+    {
+      "title": "Talent & Recruitment",
+      "path": "/talent-recruitment",
+      "source_url": "https://www.qualtronsinclair.com/talent-recruitment"
+    },
+    {
+      "title": "Digital Presence & Platforms",
+      "path": "/digital-presence-platforms",
+      "source_url": "https://www.qualtronsinclair.com/digital-presence-platforms"
+    },
+    {
+      "title": "Physical Infrastructure",
+      "path": "/physical-infrastructure",
+      "source_url": "https://www.qualtronsinclair.com/physical-infrastructure"
+    },
+    {
+      "title": "Innovation & Technology",
+      "path": "/innovation-technology",
+      "source_url": "https://www.qualtronsinclair.com/innovation-technology"
+    },
+    {
+      "title": "Capital Structuring & Fundraising",
+      "path": "/capital-structuring-fundraising",
+      "source_url": "https://www.qualtronsinclair.com/capital-structuring-fundraising"
+    },
+    {
+      "title": "Portfolio",
+      "path": "/portfolio",
+      "source_url": "https://www.qualtronsinclair.com/portfolio"
+    },
+    {
+      "title": "QS Networks",
+      "path": "/qs-networks",
+      "source_url": "https://www.qualtronsinclair.com/qs-networks"
+    },
+    {
+      "title": "Leadership",
+      "path": "/leadership",
+      "source_url": "https://www.qualtronsinclair.com/leadership"
+    },
+    {
+      "title": "Careers",
+      "path": "/careers",
+      "source_url": "https://www.qualtronsinclair.com/careers"
+    },
+    {
+      "title": "Insights",
+      "path": "/blog",
+      "source_url": "https://www.qualtronsinclair.com/blog"
+    },
+    {
+      "title": "Contact",
+      "path": "/contact-3",
+      "source_url": "https://www.qualtronsinclair.com/contact-3"
+    }
+  ],
+  "notes": [
+    "SEO titles/descriptions beyond browser titles should be exported from Wix SEO panel for exact migration.",
+    "Blog post SEO metadata should be exported from Wix Blog/admin.",
+    "Preserve current slugs or create 301 redirects when rebuilding."
+  ]
+}

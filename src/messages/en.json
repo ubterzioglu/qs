@@ -1,0 +1,89 @@
+{
+  "brand": {
+    "name": "Qualtron Sinclair",
+    "tagline": "We Design the Structure Behind Growth"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "networks": "QS Networks",
+    "leadership": "Leadership",
+    "careers": "Careers",
+    "insights": "Insights",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "home": {
+    "sectionLabel": "01 — Growth Architecture",
+    "heroLineA": "We design the",
+    "heroLineB": "structure behind",
+    "heroLineC": "growth.",
+    "heroSub": "Strategy · Compliance · Capital · Technology · Talent · Infrastructure · Operations",
+    "heroIntro": "We guide corporations establishing their presence in MENA — enabling smart, scalable, and compliant market penetration.",
+    "regions": "MENA · UAE · Qatar · KSA",
+    "whoLabel": "02 — Who We Are",
+    "whoTitle": "Not an advisory firm. A growth architect.",
+    "verticalsLabel": "03 — Our Verticals",
+    "verticalsTitle": "From infrastructure to intelligence — one partner, multiple solutions.",
+    "cta": "Let's build growth together",
+    "ctaButton": "Contact us"
+  },
+  "services": {
+    "indexLabel": "Services",
+    "indexTitle": "Six operating verticals",
+    "readMore": "Read more",
+    "quoteLabel": "Principle"
+  },
+  "portfolio": { "label": "Portfolio", "title": "Our Ventures & Partners" },
+  "networks": { "label": "QS Networks", "title": "Defining new-generation networking" },
+  "leadership": { "label": "Leadership", "title": "Operator-investors", "principlesTitle": "Our Principles" },
+  "careers": {
+    "label": "Careers",
+    "title": "Lead. Build. Grow.",
+    "intro": "We're always looking for strategic minds, builders, and future partners.",
+    "formTitle": "Apply to join"
+  },
+  "insights": { "label": "Insights", "title": "All posts", "readTime": "{minutes} min read", "back": "All insights" },
+  "contact": {
+    "label": "Contact",
+    "title": "Let's talk expansion",
+    "intro": "Get in touch to explore how we can partner for expansion, investment, innovation and inspiration.",
+    "offices": "Offices",
+    "hubTitle": "Start-up & Investor Hub",
+    "hubBody": "Where high-potential start-ups meet global investors. Upload your one-pager, pitch deck or investment presentation to be featured."
+  },
+  "forms": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "company": "Company name",
+    "position": "Position",
+    "country": "Country of residence",
+    "dob": "Date of birth",
+    "resume": "Link to your resume",
+    "cv": "Link to CV / LinkedIn",
+    "message": "Message",
+    "project": "Current project / industry / what you're looking for",
+    "consent": "I consent to my profile information being used for AI-powered matchmaking among network members.",
+    "submit": "Submit",
+    "apply": "Apply",
+    "send": "Send",
+    "sending": "Sending…",
+    "success": "Thanks for submitting. We'll be in touch.",
+    "error": "Something went wrong. Please try again.",
+    "required": "This field is required.",
+    "invalidEmail": "Enter a valid email address."
+  },
+  "footer": {
+    "locations": "Doha — Dubai — Istanbul — Delaware",
+    "rights": "© {year} Qualtron Sinclair. All rights reserved.",
+    "buildLine": "Let's build growth together",
+    "legal": "Legal",
+    "impressum": "Impressum",
+    "privacy": "Privacy"
+  },
+  "common": { "backHome": "Back to home", "notFound": "Page not found", "loading": "Loading" }
+}

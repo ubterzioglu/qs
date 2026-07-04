@@ -1,0 +1,89 @@
+{
+  "brand": {
+    "name": "Qualtron Sinclair",
+    "tagline": "Büyümenin Arkasındaki Yapıyı Tasarlıyoruz"
+  },
+  "nav": {
+    "home": "Anasayfa",
+    "services": "Hizmetler",
+    "portfolio": "Portföy",
+    "networks": "QS Networks",
+    "leadership": "Liderlik",
+    "careers": "Kariyer",
+    "insights": "İçgörüler",
+    "contact": "İletişim",
+    "menu": "Menü",
+    "close": "Kapat"
+  },
+  "home": {
+    "sectionLabel": "01 — Büyüme Mimarisi",
+    "heroLineA": "Büyümenin",
+    "heroLineB": "arkasındaki yapıyı",
+    "heroLineC": "tasarlıyoruz.",
+    "heroSub": "Strateji · Uyum · Sermaye · Teknoloji · Yetenek · Altyapı · Operasyon",
+    "heroIntro": "MENA bölgesinde varlık kuran kurumlara rehberlik ediyoruz — akıllı, ölçeklenebilir ve uyumlu pazar girişini mümkün kılıyoruz.",
+    "regions": "MENA · BAE · Katar · KSA",
+    "whoLabel": "02 — Biz Kimiz",
+    "whoTitle": "Bir danışmanlık firması değil. Bir büyüme mimarı.",
+    "verticalsLabel": "03 — Dikeylerimiz",
+    "verticalsTitle": "Altyapıdan zekaya — tek partner, çoklu çözüm.",
+    "cta": "Birlikte büyüme inşa edelim",
+    "ctaButton": "Bize ulaşın"
+  },
+  "services": {
+    "indexLabel": "Hizmetler",
+    "indexTitle": "Altı operasyonel dikey",
+    "readMore": "Devamını oku",
+    "quoteLabel": "İlke"
+  },
+  "portfolio": { "label": "Portföy", "title": "Girişimlerimiz ve Partnerlerimiz" },
+  "networks": { "label": "QS Networks", "title": "Yeni nesil networking'i tanımlıyoruz" },
+  "leadership": { "label": "Liderlik", "title": "Operatör-yatırımcılar", "principlesTitle": "İlkelerimiz" },
+  "careers": {
+    "label": "Kariyer",
+    "title": "Liderlik Et. İnşa Et. Büyü.",
+    "intro": "Her zaman stratejik zihinler, kurucular ve gelecekteki partnerler arıyoruz.",
+    "formTitle": "Başvur"
+  },
+  "insights": { "label": "İçgörüler", "title": "Tüm yazılar", "readTime": "{minutes} dk okuma", "back": "Tüm içgörüler" },
+  "contact": {
+    "label": "İletişim",
+    "title": "Genişlemeyi konuşalım",
+    "intro": "Genişleme, yatırım, inovasyon ve ilham için nasıl partner olabileceğimizi keşfetmek üzere bize ulaşın.",
+    "offices": "Ofisler",
+    "hubTitle": "Girişim & Yatırımcı Merkezi",
+    "hubBody": "Yüksek potansiyelli girişimlerin küresel yatırımcılarla buluştuğu yer. Öne çıkmak için tek sayfalık özetinizi, sunumunuzu veya yatırım prezantasyonunuzu yükleyin."
+  },
+  "forms": {
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "company": "Şirket adı",
+    "position": "Pozisyon",
+    "country": "İkamet ülkesi",
+    "dob": "Doğum tarihi",
+    "resume": "Özgeçmiş bağlantınız",
+    "cv": "CV / LinkedIn bağlantısı",
+    "message": "Mesaj",
+    "project": "Mevcut proje / sektör / aradığınız",
+    "consent": "Profil bilgilerimin ağ üyeleri arasında yapay zeka destekli eşleştirme için kullanılmasına onay veriyorum.",
+    "submit": "Gönder",
+    "apply": "Başvur",
+    "send": "Gönder",
+    "sending": "Gönderiliyor…",
+    "success": "Gönderdiğiniz için teşekkürler. Sizinle iletişime geçeceğiz.",
+    "error": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    "required": "Bu alan zorunludur.",
+    "invalidEmail": "Geçerli bir e-posta adresi girin."
+  },
+  "footer": {
+    "locations": "Doha — Dubai — İstanbul — Delaware",
+    "rights": "© {year} Qualtron Sinclair. Tüm hakları saklıdır.",
+    "buildLine": "Birlikte büyüme inşa edelim",
+    "legal": "Yasal",
+    "impressum": "Künye",
+    "privacy": "Gizlilik"
+  },
+  "common": { "backHome": "Anasayfaya dön", "notFound": "Sayfa bulunamadı", "loading": "Yükleniyor" }
+}
