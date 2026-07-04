@@ -1,0 +1,33 @@
+# Deps & build artifacts (rebuilt inside the image)
+node_modules
+.next
+out
+build
+
+# Env & secrets — never bake into the image
+.env
+.env.local
+.env*.local
+
+# Large reference source material (not needed at runtime; public/media already holds site assets)
+ref
+
+# VCS & tooling
+.git
+.gitignore
+.gitattributes
+.github
+
+# OMC / editor / OS
+.omc
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Docs & planning (not needed in the image)
+PLAN.md
+MIGRATION.md
+DEPLOY.md
+*.log
+tmp

@@ -5,6 +5,8 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Emit a self-contained server bundle (.next/standalone) for a small Docker image.
+  output: "standalone",
   async redirects() {
     // Old Wix slugs -> new structure (301). Locale-agnostic; next-intl adds prefix.
     const map: Array<[string, string]> = [

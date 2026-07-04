@@ -1,0 +1,32 @@
+# Coolify can deploy this repo directly via Dockerfile, or via this compose file
+# ("Docker Compose" build pack). Also usable locally: `docker compose up --build`.
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_* are compile-time. In Coolify, set these as Build Variables.
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    environment:
+      NODE_ENV: production
+      # Runtime (server-only) variables — safe to change without a rebuild.
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      # Flip to 1/true/on to serve the premium "yenileniyoruz" takeover.
+      MAINTENANCE_MODE: ${MAINTENANCE_MODE:-}
+      # Must also be present at runtime for server components that read them.
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
