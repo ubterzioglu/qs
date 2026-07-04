@@ -1,0 +1,79 @@
+[
+  {
+    "label": "About",
+    "href": "/",
+    "source_url": "https://www.qualtronsinclair.com/"
+  },
+  {
+    "label": "Hakkımızda",
+    "href": "/about-5",
+    "source_url": "https://www.qualtronsinclair.com/about-5",
+    "note": "Template/placeholder content detected; should be replaced or removed."
+  },
+  {
+    "label": "Legal & Compliance",
+    "href": "/legal-compliance",
+    "group": "Services",
+    "source_url": "https://www.qualtronsinclair.com/legal-compliance"
+  },
+  {
+    "label": "Talent & Recruitment",
+    "href": "/talent-recruitment",
+    "group": "Services",
+    "source_url": "https://www.qualtronsinclair.com/talent-recruitment"
+  },
+  {
+    "label": "Digital Presence & Platforms",
+    "href": "/digital-presence-platforms",
+    "group": "Services",
+    "source_url": "https://www.qualtronsinclair.com/digital-presence-platforms"
+  },
+  {
+    "label": "Physical Infrastructure",
+    "href": "/physical-infrastructure",
+    "group": "Services",
+    "source_url": "https://www.qualtronsinclair.com/physical-infrastructure"
+  },
+  {
+    "label": "Innovation & Technology",
+    "href": "/innovation-technology",
+    "group": "Services",
+    "source_url": "https://www.qualtronsinclair.com/innovation-technology"
+  },
+  {
+    "label": "Capital Structuring & Fundraising",
+    "href": "/capital-structuring-fundraising",
+    "group": "Services",
+    "source_url": "https://www.qualtronsinclair.com/capital-structuring-fundraising"
+  },
+  {
+    "label": "Portfolio",
+    "href": "/portfolio",
+    "source_url": "https://www.qualtronsinclair.com/portfolio"
+  },
+  {
+    "label": "QS Networks",
+    "href": "/qs-networks",
+    "source_url": "https://www.qualtronsinclair.com/qs-networks"
+  },
+  {
+    "label": "Leadership",
+    "href": "/leadership",
+    "source_url": "https://www.qualtronsinclair.com/leadership"
+  },
+  {
+    "label": "Careers",
+    "href": "/careers",
+    "source_url": "https://www.qualtronsinclair.com/careers"
+  },
+  {
+    "label": "Insights",
+    "href": "/blog",
+    "source_url": "https://www.qualtronsinclair.com/blog"
+  },
+  {
+    "label": "Contact",
+    "href": "/contact-3",
+    "source_url": "https://www.qualtronsinclair.com/contact-3"
+  }
+]
