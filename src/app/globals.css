@@ -130,3 +130,22 @@ body {
   letter-spacing: -0.02em;
   line-height: 0.98;
 }
+
+/* --- Maintenance takeover (dark context) --- */
+.bp-maint-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: rgba(245, 244, 240, 0.6);
+}
+.bp-maint-rule {
+  height: 1px;
+  width: 100%;
+  background: rgba(245, 244, 240, 0.5);
+  transform-origin: left center;
+  animation: bp-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bp-maint-rule { animation: none; }
+}

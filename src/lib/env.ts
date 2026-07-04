@@ -11,6 +11,9 @@ export const env = {
     .split(",")
     .map((s) => s.trim().toLowerCase())
     .filter(Boolean),
+  // Maintenance ("yenileniyoruz") takeover. When "1"/"true", public traffic is
+  // rewritten to /maintenance; /admin and /maintenance stay reachable.
+  maintenanceMode: /^(1|true|on)$/i.test(process.env.MAINTENANCE_MODE ?? ""),
 };
 
 /** True when public Supabase env is configured (client-safe check). */
