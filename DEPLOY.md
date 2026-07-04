@@ -44,6 +44,10 @@ not enough. After changing any `NEXT_PUBLIC_*` value, **redeploy** so the bundle
 `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_EMAILS`, and `MAINTENANCE_MODE` are read at runtime,
 so changing those only needs a container **restart/redeploy** (no rebuild required).
 
+> The build **does not fail** if `NEXT_PUBLIC_SITE_URL` is missing — it falls back to a
+> safe default. But canonical/OG/sitemap URLs will be wrong, so set it to your real domain
+> (with `https://`) as a Build Variable for correct SEO.
+
 ## Toggling maintenance mode in production
 
 1. Coolify → your app → **Environment Variables** → set `MAINTENANCE_MODE=1`.

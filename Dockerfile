@@ -27,6 +27,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # NEXT_PUBLIC_* are inlined at build time. Provide them as build args if set;
 # server-only vars (SUPABASE_SERVICE_ROLE_KEY, MAINTENANCE_MODE, ADMIN_EMAILS)
 # are read at runtime and passed via the container environment instead.
+# NOTE: when an arg is not passed, these ENVs become empty STRINGS (not unset).
+# src/lib/env.ts treats empty/whitespace values as absent and validates the site
+# URL, so `new URL(siteUrl)` for metadataBase never throws during prerender.
 ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
 ARG NEXT_PUBLIC_SITE_URL
