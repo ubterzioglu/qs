@@ -50,6 +50,15 @@ so changing those only needs a container **restart/redeploy** (no rebuild requir
 2. Redeploy (or restart). All public visitors now see `/maintenance`; `/admin` still works.
 3. To go live, set `MAINTENANCE_MODE=` (empty) and redeploy.
 
+## Build notes
+
+- **pnpm is pinned** to `10.28.1` via `packageManager` in `package.json`, so Coolify's
+  corepack uses the exact version the lockfile was made with (a newer pnpm would ignore
+  the `pnpm.onlyBuiltDependencies` field and fail the install). Don't remove this pin.
+- All native packages with install scripts (`sharp`, `esbuild`, `@swc/core`,
+  `@parcel/watcher`, `unrs-resolver`) are allow-listed in `pnpm.onlyBuiltDependencies`,
+  so `pnpm install --frozen-lockfile` won't fail with `ERR_PNPM_IGNORED_BUILDS`.
+
 ## Media / disk
 
 Site imagery lives in `public/media/` and is baked into the image (no volume needed).

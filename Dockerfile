@@ -10,6 +10,10 @@ WORKDIR /app
 
 # ---- Deps: install with a cached pnpm store ----
 FROM base AS deps
+# package.json pins `packageManager: pnpm@10.28.1`, so corepack uses that exact
+# version (the host's Coolify otherwise defaults to a newer pnpm). All packages with
+# build scripts are allow-listed in pnpm.onlyBuiltDependencies, so a frozen-lockfile
+# install won't fail on ERR_PNPM_IGNORED_BUILDS.
 COPY package.json pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile
