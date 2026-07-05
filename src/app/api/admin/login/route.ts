@@ -6,9 +6,11 @@
  *
  * POST form fields: { password }. On success, sets the signed session cookie
  * and 303-redirects to /admin. On failure, redirects back with ?error=1.
+ *
+ * Redirects use the PUBLIC origin (proxy-forwarded host), never request.url,
+ * which behind Coolify/Traefik is the internal 0.0.0.0:3000 address.
  */
 import { NextResponse } from "next/server";
-import { cookies, headers } from "next/headers";
 import {
   ADMIN_COOKIE,
   SESSION_COOKIE_OPTIONS,
@@ -16,11 +18,12 @@ import {
   verifyPassword,
 } from "@/lib/admin/session";
 import { isAdminConfigured } from "@/lib/env.server";
+import { publicOrigin } from "@/lib/admin/redirect";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  const origin = new URL(request.url).origin;
+  const origin = publicOrigin(request);
   const back = (params = "") =>
     NextResponse.redirect(`${origin}/admin/login${params}`, { status: 303 });
 
@@ -31,8 +34,7 @@ export async function POST(request: Request) {
   if (!verifyPassword(password)) return back("?error=1");
 
   const token = await createSessionToken();
-  const proto = (await headers()).get("x-forwarded-proto");
-  const secure = proto ? proto === "https" : process.env.NODE_ENV === "production";
+  const secure = origin.startsWith("https://");
 
   const res = NextResponse.redirect(`${origin}/admin`, { status: 303 });
   res.cookies.set(ADMIN_COOKIE, token, { ...SESSION_COOKIE_OPTIONS, secure });
