@@ -1,29 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
+import { updateAdminSession } from "./lib/supabase/middleware";
 
 const intlMiddleware = createMiddleware(routing);
 
-// Read at request time so toggling MAINTENANCE_MODE in the host (Vercel) takes
-// effect on redeploy without code changes.
+// Read at request time so toggling MAINTENANCE_MODE in the host takes effect
+// on restart/redeploy without code changes.
 function maintenanceOn() {
   return /^(1|true|on)$/i.test(process.env.MAINTENANCE_MODE ?? "");
 }
 
-export default function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // /maintenance lives outside the [locale] tree — never hand it to intl routing
-  // (which would try to locale-prefix it and 404).
+  // /admin: refresh the Supabase session; never locale-routed, never blocked
+  // by maintenance mode (so the site stays manageable during a takeover).
+  if (pathname.startsWith("/admin")) {
+    return updateAdminSession(request);
+  }
+
+  // /maintenance lives outside the [locale] tree — never hand it to intl routing.
   if (pathname === "/maintenance") {
     return NextResponse.next();
   }
 
   if (maintenanceOn()) {
-    // Let the maintenance page, admin, and static/next internals through.
     const allowed =
-      pathname === "/maintenance" ||
-      pathname.startsWith("/admin") ||
       pathname.startsWith("/_next") ||
       pathname.startsWith("/media") ||
       pathname.includes(".");
@@ -40,7 +43,10 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Match everything except API, Next internals, and files with extensions.
-  // (/admin handled inside so maintenance can still allow it.)
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  matcher: [
+    // Public paths: everything except API, Next internals, and files with extensions.
+    "/((?!api|_next|_vercel|.*\\..*).*)",
+    // Admin: match ALL /admin paths (even dotted segments) so session refresh always runs.
+    "/admin/:path*",
+  ],
 };

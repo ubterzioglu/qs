@@ -28,6 +28,35 @@ const TABLES: Record<FormKind, string> = {
   "startup-hub": "startup_hub_submissions",
 };
 
+/** Zod field names (camelCase) -> Postgres columns (snake_case). */
+const COLUMNS: Record<string, string> = {
+  firstName: "first_name",
+  lastName: "last_name",
+  email: "email",
+  phone: "phone",
+  message: "message",
+  dob: "dob",
+  resumeUrl: "resume_url",
+  company: "company",
+  position: "position",
+  country: "country",
+  project: "project",
+  consent: "consent",
+  cvUrl: "cv_url",
+  fileUrl: "file_url",
+};
+
+function toRow(data: Record<string, unknown>): Record<string, unknown> {
+  const row: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(data)) {
+    const column = COLUMNS[key];
+    if (!column) continue; // never pass through unmapped keys
+    // Normalize empty optional strings to NULL.
+    row[column] = value === "" ? null : value;
+  }
+  return row;
+}
+
 function parse(kind: FormKind, raw: Record<string, unknown>) {
   switch (kind) {
     case "contact":
@@ -62,17 +91,16 @@ export async function submitForm(
 
   // No DB configured yet → accept and log (demo mode).
   if (!isSupabaseConfigured) {
-    console.info(`[form:${kind}] (no DB configured) submission accepted`, result.data);
+    console.info(`[form:${kind}] (no DB configured) submission accepted`);
     return { status: "success" };
   }
 
   const supabase = await createServerClient();
   if (!supabase) return { status: "success" };
 
-  // result.data is a union of the four validated shapes; the target table is
-  // chosen dynamically, so widen to a plain row for the insert.
-  const row = result.data as Record<string, unknown>;
-  const { error } = await supabase.from(TABLES[kind]).insert(row);
+  const { error } = await supabase
+    .from(TABLES[kind])
+    .insert(toRow(result.data as Record<string, unknown>));
   if (error) {
     console.error(`[form:${kind}] insert failed`, error.message);
     return { status: "error", message: "Something went wrong. Please try again." };

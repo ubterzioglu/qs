@@ -16,7 +16,7 @@ export default async function HomePage({
   const t = await getTranslations("home");
   const nav = await getTranslations("nav");
   const services = await getServices();
-  const who = getWhoWeAre(locale as Locale);
+  const who = await getWhoWeAre(locale as Locale);
   const loc = locale as Locale;
 
   return (

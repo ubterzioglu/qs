@@ -48,6 +48,24 @@ so changing those only needs a container **restart/redeploy** (no rebuild requir
 > safe default. But canonical/OG/sitemap URLs will be wrong, so set it to your real domain
 > (with `https://`) as a Build Variable for correct SEO.
 
+## Admin panel (/admin)
+
+The admin console requires all four Supabase variables **plus** `ADMIN_EMAILS`.
+Sign-in = Supabase Auth email/password AND the email must be in `ADMIN_EMAILS`.
+
+One-time bootstrap (run locally with `.env.local` filled):
+
+```bash
+pnpm seed                            # push seed content into the DB tables
+pnpm tsx scripts/create-admin.ts     # create the admin auth user (ADMIN_SEED_*)
+pnpm tsx scripts/verify-rls.ts       # security smoke test (RLS boundaries)
+```
+
+Features: dashboard, form-submission inbox with CSV export, service/insight
+editors (EN+TR, drafts), revision-request board with comment threads, settings.
+Content edits go live within ~60s (ISR); if the DB is unreachable the public
+site falls back to the built-in seed content.
+
 ## Toggling maintenance mode in production
 
 1. Coolify → your app → **Environment Variables** → set `MAINTENANCE_MODE=1`.

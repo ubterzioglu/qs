@@ -27,6 +27,13 @@ full name · short description · logo · external URL · category
 (venture/partner/subsidiary/investment/platform) · display order · public vs confidential.
 Confirmed so far: **Ritefit** (Hisseli Gayrimenkul), **CorteQS** (corteqs.net).
 
+## 0. Abuse protection for public forms (infra)
+Form tables allow anonymous INSERT (by design) and now have DB-layer length
+CHECK constraints (migration 0003) so oversized rows are rejected even via direct
+PostgREST. Still recommended before heavy public traffic: rate limiting / captcha
+at the edge (Cloudflare Turnstile or Vercel/Coolify WAF) to stop volume flooding —
+not solvable in app code alone.
+
 ## 4. Forms & submissions
 - Destination emails / notification recipients / automations per form
 - Consent/privacy wording (esp. InnoVenture AI-matchmaking consent — legal basis)

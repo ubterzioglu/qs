@@ -24,7 +24,7 @@ export default async function LeadershipPage({
   const t = await getTranslations("leadership");
   const loc = locale as Locale;
   const principles = await getPrinciples();
-  const intro = getLeadershipIntro(loc);
+  const intro = await getLeadershipIntro(loc);
 
   return (
     <>

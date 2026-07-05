@@ -12,6 +12,10 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// ISR: re-render public pages at most every 60s so CMS edits in /admin appear
+// without a redeploy (pages fall back to the static seed if the DB is down).
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: {

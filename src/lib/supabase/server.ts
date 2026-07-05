@@ -7,10 +7,12 @@
  * All are null-safe: if env is absent, callers fall back to seed/no-op so the app
  * still runs without a database.
  */
+import "server-only";
 import { cookies } from "next/headers";
 import { createServerClient as createSsrClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 import { env, isSupabaseConfigured } from "@/lib/env";
+import { serverEnv } from "@/lib/env.server";
 
 export async function createServerClient() {
   if (!isSupabaseConfigured) return null;
@@ -35,8 +37,8 @@ export async function createServerClient() {
 
 /** Service-role client. Returns null unless BOTH url and service key are set. */
 export function createServiceClient() {
-  if (!env.supabaseUrl || !env.supabaseServiceRoleKey) return null;
-  return createClient(env.supabaseUrl, env.supabaseServiceRoleKey, {
+  if (!env.supabaseUrl || !serverEnv.supabaseServiceRoleKey) return null;
+  return createClient(env.supabaseUrl, serverEnv.supabaseServiceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
