@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { Label, Section } from "@/components/blueprint";
 import { getServices } from "@/content";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "services" });
-  return { title: t("indexLabel"), description: t("indexTitle") };
+  return pageMetadata({ locale: locale as Locale, path: "/services", title: t("indexTitle"), description: t("indexTitle") });
 }
 
 export default async function ServicesIndex({

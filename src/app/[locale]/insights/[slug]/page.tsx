@@ -7,6 +7,8 @@ import { routing, type Locale } from "@/i18n/routing";
 import { Label, Rule } from "@/components/blueprint";
 import { Markdown } from "@/lib/markdown";
 import { getBlogPost, getBlogPosts } from "@/content";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { absoluteUrl, altLanguages } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -24,10 +26,23 @@ export async function generateMetadata({
   const post = await getBlogPost(slug);
   if (!post) return {};
   const loc = locale as Locale;
+  const path = `/insights/${slug}`;
   return {
     title: post.title[loc],
     description: post.excerpt[loc],
-    openGraph: { type: "article", images: post.cover ? [post.cover] : undefined },
+    alternates: {
+      canonical: loc === "tr" ? `/tr${path}` : path,
+      languages: altLanguages(path),
+    },
+    openGraph: {
+      type: "article",
+      title: post.title[loc],
+      description: post.excerpt[loc],
+      publishedTime: post.publishedAt,
+      authors: [post.author],
+      images: post.cover ? [post.cover] : ["/opengraph-image.png"],
+    },
+    twitter: { card: "summary_large_image", title: post.title[loc], description: post.excerpt[loc] },
   };
 }
 
@@ -46,6 +61,22 @@ export default async function InsightPost({
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12 lg:px-8">
+      <ArticleJsonLd
+        locale={loc}
+        title={post.title[loc]}
+        description={post.excerpt[loc]}
+        slug={post.slug}
+        cover={post.cover}
+        author={post.author}
+        publishedAt={post.publishedAt}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Qualtron Sinclair", url: absoluteUrl("/", loc) },
+          { name: t("label"), url: absoluteUrl("/insights", loc) },
+          { name: post.title[loc], url: absoluteUrl(`/insights/${post.slug}`, loc) },
+        ]}
+      />
       <Link href="/insights" className="bp-label text-[var(--color-graphite)] hover:text-[var(--color-ink)]">
         ← {t("back")}
       </Link>

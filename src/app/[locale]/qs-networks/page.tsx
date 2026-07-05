@@ -4,6 +4,7 @@ import type { Locale } from "@/i18n/routing";
 import { Label, Section, CodeCard } from "@/components/blueprint";
 import { getNetworkBrands } from "@/content";
 import { InnoventureForm } from "@/components/forms/innoventure-form";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "networks" });
-  return { title: t("label"), description: t("title") };
+  return pageMetadata({ locale: locale as Locale, path: "/qs-networks", title: t("title"), description: t("title") });
 }
 
 export default async function NetworksPage({

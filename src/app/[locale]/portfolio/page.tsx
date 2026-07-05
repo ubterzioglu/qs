@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { Label, Section, CodeCard } from "@/components/blueprint";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -10,7 +11,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "portfolio" });
-  return { title: t("label"), description: t("title") };
+  return pageMetadata({ locale: locale as Locale, path: "/portfolio", title: t("title"), description: t("title") });
 }
 
 // Public-side portfolio text was image-based; these are the entries confirmed in the

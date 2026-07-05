@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { Label, Rule, Section } from "@/components/blueprint";
 import { VideoHero } from "@/components/video-hero";
 import { getServices, getWhoWeAre } from "@/content";
+import { FaqJsonLd, ProfessionalServiceJsonLd } from "@/components/json-ld";
 
 export default async function HomePage({
   params,
@@ -21,6 +22,15 @@ export default async function HomePage({
 
   return (
     <>
+      <FaqJsonLd locale={loc} />
+      <ProfessionalServiceJsonLd
+        locale={loc}
+        services={services.map((s) => ({
+          slug: s.slug,
+          title: s.title[loc],
+          description: s.description[loc],
+        }))}
+      />
       {/* HERO — ambient boardroom video, serif thesis, brass accent */}
       <VideoHero src="/media/brand/hero.mp4" poster="/media/brand/who-we-are.jpg">
         <div className="flex items-center justify-between">

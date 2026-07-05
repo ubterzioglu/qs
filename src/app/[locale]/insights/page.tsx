@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { Label, Section } from "@/components/blueprint";
 import { getBlogPosts } from "@/content";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "insights" });
-  return { title: t("label"), description: t("title") };
+  return pageMetadata({ locale: locale as Locale, path: "/insights", title: t("title"), description: t("title") });
 }
 
 export default async function InsightsIndex({

@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { Label, Rule } from "@/components/blueprint";
 import { getService, getServices } from "@/content";
+import { pageMetadata, absoluteUrl } from "@/lib/seo";
+import { BreadcrumbJsonLd } from "@/components/json-ld";
 
 export async function generateStaticParams() {
   const services = await getServices();
@@ -23,10 +25,13 @@ export async function generateMetadata({
   const service = await getService(slug);
   if (!service) return {};
   const loc = locale as Locale;
-  return {
+  return pageMetadata({
+    locale: loc,
+    path: `/services/${slug}`,
     title: service.title[loc],
-    description: service.description[loc].slice(0, 160),
-  };
+    description: service.description[loc].slice(0, 200),
+    image: service.image,
+  });
 }
 
 export default async function ServiceDetail({
@@ -48,6 +53,13 @@ export default async function ServiceDetail({
 
   return (
     <article>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Qualtron Sinclair", url: absoluteUrl("/", loc) },
+          { name: nav("services"), url: absoluteUrl("/services", loc) },
+          { name: service.title[loc], url: absoluteUrl(`/services/${slug}`, loc) },
+        ]}
+      />
       <div className="mx-auto max-w-6xl px-6 pt-12 lg:px-8">
         <Link href="/services" className="bp-label text-[var(--color-graphite)] hover:text-[var(--color-ink)]">
           ← {nav("services")}

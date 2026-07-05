@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { Viewport } from "next";
 import { Inter, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -22,9 +23,14 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#0a0e1f",
+  colorScheme: "dark",
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${display.variable} ${body.variable} ${mono.variable}`}>
         {children}
       </body>

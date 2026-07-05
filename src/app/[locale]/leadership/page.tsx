@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { Label, Section, CodeCard } from "@/components/blueprint";
 import { getPrinciples, getLeadershipIntro } from "@/content";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -11,7 +12,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "leadership" });
-  return { title: t("label"), description: t("title") };
+  return pageMetadata({ locale: locale as Locale, path: "/leadership", title: t("title"), description: t("title") });
 }
 
 export default async function LeadershipPage({
