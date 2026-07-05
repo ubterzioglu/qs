@@ -1,103 +1,80 @@
 /**
- * Generate favicon + OG assets from the brand marks (obsidian + brass).
- * Renders SVG -> PNG/ICO with sharp into src/app (Next metadata files) and public/.
+ * Generate favicon + OG assets from the REAL Qualtron Sinclair logo
+ * (ref/brand/qualtron-logo.jpg — obsidian tile, cream serif wordmark + nested-square
+ * "Q" monogram). Small icons use the cropped monogram (wordmark is illegible at 32px);
+ * the OG card uses the full logo. Renders with sharp into src/app + public.
  *
  *   pnpm tsx scripts/gen-brand-assets.ts
  */
-import { writeFile, mkdir } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import sharp from "sharp";
 
-const OBSIDIAN = "#0a0e1f";
-const BRASS = "#c8a15a";
-const CREAM = "#f3efe6";
+const OBSIDIAN = "#09082a"; // sampled from the logo tile so it blends seamlessly
 
 const root = process.cwd();
+const LOGO = resolve(root, "ref/brand/qualtron-logo.jpg");
 const pub = (p: string) => resolve(root, "public", p);
 const app = (p: string) => resolve(root, "src/app", p);
 
-/** The nested-square "Q" monogram on the obsidian tile. `pad` = inset ratio. */
-function iconSvg(size: number, opts: { bg?: string; stroke?: string; radius?: number } = {}) {
-  const bg = opts.bg ?? OBSIDIAN;
-  const stroke = opts.stroke ?? BRASS;
-  const r = opts.radius ?? 0;
-  // 26x26 monogram viewBox, centered & scaled with padding.
-  const inner = size * 0.62;
-  const off = (size - inner) / 2;
-  const sw = Math.max(1.5, size * 0.06);
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-  <rect width="${size}" height="${size}" rx="${r}" fill="${bg}"/>
-  <g transform="translate(${off} ${off}) scale(${inner / 26})" fill="none" stroke="${stroke}" stroke-width="${(sw * 26) / inner}">
-    <rect x="1" y="1" width="24" height="24"/>
-    <rect x="7" y="7" width="12" height="12"/>
-    <path d="M15 15L23 23"/>
-  </g>
-</svg>`;
+// Monogram crop from the 500x500 logo (tuned to the nested-square "Q").
+const MONO = { left: 36, top: 204, width: 92, height: 92 };
+
+/** A square icon of the monogram on the obsidian tile, at `size` px. */
+async function iconBuffer(size: number, padRatio = 0.18): Promise<Buffer> {
+  const inner = Math.round(size * (1 - padRatio * 2));
+  const mono = await sharp(LOGO)
+    .extract(MONO)
+    .resize(inner, inner, { fit: "contain", background: OBSIDIAN })
+    .toBuffer();
+  return sharp({
+    create: { width: size, height: size, channels: 4, background: OBSIDIAN },
+  })
+    .composite([{ input: mono, gravity: "center" }])
+    .png({ compressionLevel: 9 })
+    .toBuffer();
 }
 
-/** 1200x630 Open Graph / Twitter card. */
-function ogSvg() {
+async function writeIcon(size: number, out: string, padRatio?: number) {
+  const buf = await iconBuffer(size, padRatio);
+  await sharp(buf).toFile(out);
+  console.log("  ", out.replace(root, "."), `(${(buf.length / 1024).toFixed(1)}KB)`);
+}
+
+/** 1200x630 Open Graph card: full logo centered on the obsidian tile color. */
+async function writeOg(out: string) {
   const W = 1200, H = 630;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0f1630"/>
-      <stop offset="1" stop-color="${OBSIDIAN}"/>
-    </linearGradient>
-  </defs>
-  <rect width="${W}" height="${H}" fill="url(#g)"/>
-  <!-- faint blueprint grid -->
-  <g stroke="${CREAM}" stroke-opacity="0.05" stroke-width="1">
-    ${Array.from({ length: 30 }, (_, i) => `<line x1="${i * 40}" y1="0" x2="${i * 40}" y2="${H}"/>`).join("")}
-    ${Array.from({ length: 16 }, (_, i) => `<line x1="0" y1="${i * 40}" x2="${W}" y2="${i * 40}"/>`).join("")}
-  </g>
-  <!-- monogram -->
-  <g transform="translate(96 96) scale(3.2)" fill="none" stroke="${BRASS}" stroke-width="1.6">
-    <rect x="1" y="1" width="24" height="24"/>
-    <rect x="7" y="7" width="12" height="12"/>
-    <path d="M15 15L23 23"/>
-  </g>
-  <!-- eyebrow -->
-  <text x="96" y="360" fill="${BRASS}" font-family="monospace" font-size="24" letter-spacing="6">GROWTH ARCHITECTURE · MENA</text>
-  <!-- wordmark -->
-  <text x="94" y="440" fill="${CREAM}" font-family="Georgia, 'Times New Roman', serif" font-size="82" font-weight="600">Qualtron Sinclair</text>
-  <!-- tagline -->
-  <text x="96" y="510" fill="#a9b2c9" font-family="Georgia, serif" font-size="40">We design the structure behind growth.</text>
-  <!-- offices -->
-  <text x="96" y="575" fill="#6b7591" font-family="monospace" font-size="22" letter-spacing="4">DOHA — DUBAI — ISTANBUL — DELAWARE</text>
-</svg>`;
-}
-
-async function png(svg: string, out: string) {
-  await sharp(Buffer.from(svg)).png().toFile(out);
-  console.log("  ", out.replace(root, "."));
+  // Full logo scaled to fit within the card with margin (height-constrained so
+  // the square logo never exceeds the 630px canvas height).
+  const logo = await sharp(LOGO)
+    .resize(500, 500, { fit: "inside" })
+    .toBuffer();
+  const buf = await sharp({
+    create: { width: W, height: H, channels: 4, background: OBSIDIAN },
+  })
+    .composite([{ input: logo, gravity: "center" }])
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  await sharp(buf).toFile(out);
+  console.log("  ", out.replace(root, "."), `(${(buf.length / 1024).toFixed(1)}KB)`);
 }
 
 async function run() {
   await mkdir(pub("."), { recursive: true });
 
-  console.log("favicons…");
-  // Next App Router picks these up automatically from src/app/*.
-  await png(iconSvg(32), app("icon.png"));            // browser tab
-  await png(iconSvg(180, { radius: 40 }), app("apple-icon.png")); // iOS home screen
-  // PWA icons in public/
-  await png(iconSvg(192), pub("icon-192.png"));
-  await png(iconSvg(512), pub("icon-512.png"));
-  // Maskable (safe-zone padding via smaller monogram already applied)
-  await png(iconSvg(512), pub("icon-maskable-512.png"));
-  // .ico (multi-size) for legacy
-  await sharp(Buffer.from(iconSvg(48))).resize(48, 48).toFormat("png").toFile(pub("favicon-48.png"));
-  // Next serves favicon.ico from src/app/favicon.ico
-  await sharp(Buffer.from(iconSvg(32))).resize(32, 32).toFormat("png").toFile(app("favicon.ico"));
+  console.log("favicons (monogram)…");
+  await writeIcon(32, app("icon.png"));
+  await writeIcon(180, app("apple-icon.png"), 0.14);
+  await writeIcon(192, pub("icon-192.png"));
+  await writeIcon(512, pub("icon-512.png"));
+  await writeIcon(512, pub("icon-maskable-512.png"), 0.24); // extra safe-zone padding
 
-  // SVG favicon (crisp at any size)
-  await writeFile(app("icon.svg"), iconSvg(32).trim(), "utf8");
-
-  console.log("Open Graph image…");
-  await png(ogSvg(), app("opengraph-image.png")); // 1200x630, auto-used by Next
-  await png(ogSvg(), app("twitter-image.png"));
+  console.log("Open Graph / Twitter (full logo)…");
+  await writeOg(app("opengraph-image.png"));
+  await writeOg(app("twitter-image.png"));
 
   console.log("Done ✔");
+  console.log("Note: icon.svg (vector monogram) is kept as-is for crisp tab rendering.");
 }
 
 run().catch((e) => {
