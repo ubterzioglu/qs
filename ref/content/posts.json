@@ -1,0 +1,62 @@
+{
+  "site": {
+    "name": "Qualtron Sinclair",
+    "sourceSiteId": "64e043d6-a92a-4451-b0b2-43ba37ada13b",
+    "exportedFrom": "Wix Blog (blog/v3)",
+    "exportedAt": "2026-07-05",
+    "notes": "Content extracted via Wix REST API. Rich content converted from Ricos JSON to Markdown. Images point to original Wix CDN URLs (static.wixstatic.com)."
+  },
+  "posts": [
+    {
+      "id": "c30fd3d4-8c33-4b74-918d-8bcb3887d9f6",
+      "title": "Beyond Intelligence: The Rise of Autonomous Digital Agents",
+      "slug": "beyond-intelligence-the-rise-of-autonomous-digital-agents",
+      "excerpt": "Discover the rise of Autonomous Digital Agents—self-learning, mission-driven entities reshaping strategy, operations, and human-machine collaboration.",
+      "firstPublishedDate": "2025-07-15T08:13:47.414Z",
+      "lastPublishedDate": "2025-07-15T08:35:06.259Z",
+      "minutesToRead": 2,
+      "language": "en",
+      "coverImage": "https://static.wixstatic.com/media/d7fe0e_532a450ca64844f8a800c738c302b200~mv2.jpg",
+      "markdownFile": "posts/beyond-intelligence-the-rise-of-autonomous-digital-agents.md"
+    },
+    {
+      "id": "c8a0677f-08f0-461a-bced-c308130f5877",
+      "title": "The Digital Fabric of Cities: Smart Ecosystems and Civic AI",
+      "slug": "the-digital-fabric-of-cities-smart-ecosystems-and-civic-ai",
+      "originalSlug": "qualtron-sinclair-yüksek-güven-ve-düşük-gürültülü-tasarım",
+      "excerpt": "Explore how Civic AI transforms cities into adaptive, intelligent ecosystems—blending data, ethics, and innovation to shape the future of urban life.",
+      "firstPublishedDate": "2025-07-08T12:14:15.750Z",
+      "lastPublishedDate": "2025-07-08T12:14:15.750Z",
+      "minutesToRead": 2,
+      "language": "en",
+      "coverImage": "https://static.wixstatic.com/media/d7fe0e_b199a5eed7484bab80031c249f751200~mv2.jpg",
+      "markdownFile": "posts/the-digital-fabric-of-cities-smart-ecosystems-and-civic-ai.md"
+    },
+    {
+      "id": "c7f10889-9f8e-41bc-bf99-3e5c9762d4b4",
+      "title": "Clone Age 2",
+      "slug": "clone-age-2",
+      "originalSlug": "qualtron-sinclair-minimalist-ve-zarif-landing-page-tasarımı",
+      "excerpt": "The Dawn of Personal, Organizational, and Corporate Digital Twins - The Clone Age.",
+      "firstPublishedDate": "2025-07-07T12:14:19.360Z",
+      "lastPublishedDate": "2025-07-15T14:25:12.935Z",
+      "minutesToRead": 3,
+      "language": "en",
+      "coverImage": "https://static.wixstatic.com/media/d7fe0e_5f703942ecae4b2bb67e1c4b281ed7be~mv2.jpg",
+      "markdownFile": "posts/clone-age-2.md"
+    },
+    {
+      "id": "e7b8829c-a43e-4ec8-8c35-e5777aca44a2",
+      "title": "Clone Age",
+      "slug": "clone-age",
+      "originalSlug": "qualtron-sinclair-modern-ve-kurumsal-landing-page-tasarımı",
+      "excerpt": "Discover the Clone Age: how digital twins—personal, organizational, and corporate—unlock insight, efficiency, and resilience through AI-driven strategies.",
+      "firstPublishedDate": "2025-07-06T12:15:32.434Z",
+      "lastPublishedDate": "2025-07-15T14:26:50.376Z",
+      "minutesToRead": 4,
+      "language": "en",
+      "coverImage": "https://static.wixstatic.com/media/d7fe0e_0f57ee17340c4e2aabc674597f1c2a85~mv2.jpg",
+      "markdownFile": "posts/clone-age.md"
+    }
+  ]
+}

@@ -13,6 +13,12 @@ function maintenanceOn() {
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // /maintenance lives outside the [locale] tree — never hand it to intl routing
+  // (which would try to locale-prefix it and 404).
+  if (pathname === "/maintenance") {
+    return NextResponse.next();
+  }
+
   if (maintenanceOn()) {
     // Let the maintenance page, admin, and static/next internals through.
     const allowed =

@@ -1,0 +1,12 @@
+{
+  "name": "qualtron-sinclair",
+  "version": "1.0.0",
+  "description": "Content export of the Qualtron Sinclair site (from Wix), as editable Markdown + a static site builder.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "npx serve dist"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

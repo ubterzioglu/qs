@@ -12,6 +12,9 @@ build
 # Large reference source material (not needed at runtime; public/media already holds site assets)
 ref
 
+# Design backup — archive only, never built or shipped
+newdesign
+
 # VCS & tooling
 .git
 .gitignore

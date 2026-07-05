@@ -1,13 +1,12 @@
 import type { ReactNode } from "react";
-import { Inter, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-// Display: refined serif for the premium asset-manager voice.
-// Body: humanist sans. Utility: mono for eyebrow labels / data.
-const display = Cormorant_Garamond({
+// Display: wide grotesk with character. Body: humanist sans. Utility: mono for labels/data.
+const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["500", "600"],
+  weight: ["500", "700"],
   display: "swap",
 });
 const body = Inter({
