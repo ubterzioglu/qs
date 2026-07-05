@@ -8,6 +8,7 @@
  */
 import { createServerClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/env";
+import { notifySubmission } from "@/lib/notify";
 import {
   contactSchema,
   careersSchema,
@@ -105,5 +106,8 @@ export async function submitForm(
     console.error(`[form:${kind}] insert failed`, error.message);
     return { status: "error", message: "Something went wrong. Please try again." };
   }
+
+  // Best-effort email alert (never blocks or fails the submission).
+  await notifySubmission(kind, result.data as Record<string, unknown>);
   return { status: "success" };
 }

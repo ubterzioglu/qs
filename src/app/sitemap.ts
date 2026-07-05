@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/contact",
     "/impressum",
     "/privacy",
+    "/cookies",
   ];
   const servicePaths = services.map((s) => `/services/${s.slug}`);
   const postPaths = posts.map((p) => `/insights/${p.slug}`);

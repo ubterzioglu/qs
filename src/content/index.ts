@@ -9,6 +9,7 @@ import {
   blogPosts,
   leadershipIntro,
   networkBrands,
+  portfolioItems,
   principles,
   services,
   siteSettings,
@@ -17,6 +18,7 @@ import {
 import {
   dbBlogPosts,
   dbNetworkBrands,
+  dbPortfolioItems,
   dbPrinciples,
   dbServices,
   dbSettingValue,
@@ -51,6 +53,11 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 export async function getNetworkBrands() {
   const db = await dbNetworkBrands();
   return db ?? networkBrands;
+}
+
+export async function getPortfolioItems() {
+  const db = await dbPortfolioItems();
+  return (db ?? portfolioItems).filter((p) => p.isPublic).sort((a, b) => a.order - b.order);
 }
 
 export async function getPrinciples() {

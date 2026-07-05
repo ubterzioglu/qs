@@ -5,6 +5,19 @@ the site, but the following need to be exported/confirmed from the Wix admin pan
 provided by the client) for a clean production launch. Adapted from
 `ref/.../TODO_PANEL_EXPORTS.md`.
 
+## Status (2026-07-05)
+
+**Done in-app:** all blog bodies + Turkish translations · legal pages drafted
+(impressum/privacy/cookies, EN+TR) · portfolio structure (editable in DB) ·
+form email notifications (Resend) · full SEO + GEO.
+
+**Still needs YOU (real facts — not fabricated):**
+- Legal pages: replace every `[PLACEHOLDER]` / `[DOLDURUN]` with the real legal
+  entity name, registration/tax numbers, and full office addresses (`src/content/legal.ts`).
+- Portfolio: real venture/partner names, logos, links, descriptions (add via `/admin`
+  or `src/content/seed.ts` → `portfolioItems`).
+- Env for full activation: `RESEND_API_KEY` (form emails), `SOCIAL_LINKS` (SEO).
+
 ## 1. Media (original resolution)
 - Original logo files, favicon/brand icons
 - Hero/background images and blog cover images in original resolution

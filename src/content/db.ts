@@ -89,6 +89,27 @@ export async function dbNetworkBrands(): Promise<NetworkBrand[] | null> {
   }));
 }
 
+export async function dbPortfolioItems(): Promise<import("./types").PortfolioItem[] | null> {
+  const supabase = anonClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from("portfolio_items")
+    .select("*")
+    .eq("is_public", true)
+    .order("ord", { ascending: true });
+  if (error || !data || data.length === 0) return null;
+  return data.map((r: Row) => ({
+    slug: r.slug as string,
+    name: r.name as string,
+    category: r.category as import("./types").PortfolioCategory,
+    description: loc(r.description),
+    logo: (r.logo as string) ?? undefined,
+    url: (r.url as string) ?? undefined,
+    order: r.ord as number,
+    isPublic: r.is_public as boolean,
+  }));
+}
+
 export async function dbPrinciples(): Promise<Principle[] | null> {
   const supabase = anonClient();
   if (!supabase) return null;

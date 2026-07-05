@@ -12,6 +12,18 @@ export interface ChangelogEntry {
 export const RELEASES: ChangelogEntry[] = [
   {
     date: "2026-07-05",
+    title: "İçerik tamamlama, yasal sayfalar ve e-posta bildirimi",
+    items: [
+      "İki blog yazısının (Beyond Intelligence, Digital Fabric of Cities) tam Türkçe çevirisi eklendi.",
+      "Yasal sayfalar hazırlandı: Künye (Impressum), Gizlilik Politikası ve Çerez Politikası — profesyonel, KVKK/GDPR uyumlu taslaklar. Gerçek şirket bilgileri için [DOLDURUN] yer tutucuları bırakıldı.",
+      "Form gönderilerinde e-posta bildirimi altyapısı (Resend) kuruldu; anahtar girilince gelen her formda size otomatik mail atacak.",
+      "Portföy içeriği düzenlenebilir yapıya taşındı (Ritefit, CorteQS) ve dış bağlantı desteği eklendi.",
+      "SEO için sosyal medya profili alanı (yapılandırılmış veri) hazırlandı; profil adreslerinizi ekleyince aktif olur.",
+      "Yönetim paneline bu “Güncellemeler” bölümü eklendi.",
+    ],
+  },
+  {
+    date: "2026-07-05",
     title: "Yönetim paneli, içerik, tasarım ve SEO",
     items: [
       "Sitenin tasarımı yeni “Obsidian & Brass” koyu kurumsal temaya geçirildi (lacivert zemin, serif başlıklar, altın/bronz vurgular, video hero). Önceki tasarım yedeklendi.",

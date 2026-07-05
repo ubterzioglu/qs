@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n/routing";
 import { Section } from "@/components/blueprint";
 import { Markdown } from "@/lib/markdown";
 import { pageMetadata } from "@/lib/seo";
-import { privacy } from "@/content/legal";
+import { cookies } from "@/content/legal";
 
 export async function generateMetadata({
   params,
@@ -15,13 +15,13 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "footer" });
   return pageMetadata({
     locale: locale as Locale,
-    path: "/privacy",
-    title: t("privacy"),
-    description: t("privacy"),
+    path: "/cookies",
+    title: t("cookies"),
+    description: t("cookies"),
   });
 }
 
-export default async function PrivacyPage({
+export default async function CookiesPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -32,9 +32,9 @@ export default async function PrivacyPage({
   const loc = locale as Locale;
 
   return (
-    <Section marker="Legal" title={t("privacy")} className="border-t-0">
+    <Section marker="Legal" title={t("cookies")} className="border-t-0">
       <div className="max-w-2xl">
-        <Markdown source={privacy[loc]} />
+        <Markdown source={cookies[loc]} />
       </div>
     </Section>
   );

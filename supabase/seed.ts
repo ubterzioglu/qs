@@ -12,6 +12,7 @@ import {
   blogPosts,
   networkBrands,
   principles,
+  portfolioItems,
   siteSettings,
   whoWeAre,
   leadershipIntro,
@@ -74,6 +75,23 @@ async function run() {
       .from("network_brands")
       .upsert(rows, { onConflict: "name" });
     if (error) throw new Error(`network_brands: ${error.message}`);
+    console.log(`  ${rows.length} upserted`);
+  }
+
+  console.log("Seeding portfolio_items…");
+  {
+    const rows = portfolioItems.map((p) => ({
+      slug: p.slug,
+      name: p.name,
+      category: p.category,
+      description: p.description,
+      logo: p.logo ?? null,
+      url: p.url ?? null,
+      ord: p.order,
+      is_public: p.isPublic,
+    }));
+    const { error } = await supabase.from("portfolio_items").upsert(rows);
+    if (error) throw new Error(`portfolio_items: ${error.message}`);
     console.log(`  ${rows.length} upserted`);
   }
 

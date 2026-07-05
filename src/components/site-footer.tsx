@@ -56,6 +56,11 @@ export async function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/cookies" className="text-[var(--color-graphite)] hover:text-[var(--color-ink)]">
+                  {f("cookies")}
+                </Link>
+              </li>
+              <li>
                 <a
                   href={`mailto:${settings.contactEmail}`}
                   className="text-[var(--color-graphite)] hover:text-[var(--color-ink)]"

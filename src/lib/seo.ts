@@ -32,7 +32,13 @@ export const SITE = {
     "Doha business setup",
     "regional expansion partner",
   ],
-  sameAs: [] as string[], // add LinkedIn / X profile URLs when available
+  // Social profile URLs for JSON-LD `sameAs` (strengthens entity/brand linking).
+  // Set SOCIAL_LINKS in the env as a comma-separated list, e.g.
+  //   SOCIAL_LINKS=https://www.linkedin.com/company/...,https://x.com/...
+  sameAs: (process.env.SOCIAL_LINKS ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => /^https?:\/\//.test(s)),
   email: "contact@qualtronsinclair.com",
   offices: [
     { city: "Doha", country: "Qatar", region: "QA", locality: "Doha" },
