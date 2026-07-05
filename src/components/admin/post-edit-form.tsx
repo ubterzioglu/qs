@@ -25,24 +25,24 @@ export function PostEditForm({ post }: { post: PostFormData }) {
 
   return (
     <form action={action} className="mt-8 grid gap-6 lg:grid-cols-2">
-      <AdminField name="title_en" label="Title (EN)" defaultValue={post.title.en} required />
-      <AdminField name="title_tr" label="Title (TR)" defaultValue={post.title.tr} />
-      <AdminTextArea name="excerpt_en" label="Excerpt (EN)" defaultValue={post.excerpt.en} rows={3} />
-      <AdminTextArea name="excerpt_tr" label="Excerpt (TR)" defaultValue={post.excerpt.tr} rows={3} />
-      <AdminTextArea name="body_en" label="Body (EN, markdown)" defaultValue={post.body.en} rows={16} />
-      <AdminTextArea name="body_tr" label="Body (TR, markdown)" defaultValue={post.body.tr} rows={16} />
-      <AdminField name="author" label="Author" defaultValue={post.author} />
-      <AdminField name="cover" label="Cover path (/media/…)" defaultValue={post.cover ?? ""} />
+      <AdminField name="title_en" label="Başlık (EN)" defaultValue={post.title.en} required />
+      <AdminField name="title_tr" label="Başlık (TR)" defaultValue={post.title.tr} />
+      <AdminTextArea name="excerpt_en" label="Özet (EN)" defaultValue={post.excerpt.en} rows={3} />
+      <AdminTextArea name="excerpt_tr" label="Özet (TR)" defaultValue={post.excerpt.tr} rows={3} />
+      <AdminTextArea name="body_en" label="İçerik (EN, markdown)" defaultValue={post.body.en} rows={16} />
+      <AdminTextArea name="body_tr" label="İçerik (TR, markdown)" defaultValue={post.body.tr} rows={16} />
+      <AdminField name="author" label="Yazar" defaultValue={post.author} />
+      <AdminField name="cover" label="Kapak yolu (/media/…)" defaultValue={post.cover ?? ""} />
       <AdminSelect
         name="status"
-        label="Status"
+        label="Durum"
         defaultValue={post.status}
         options={[
-          { value: "published", label: "Published" },
-          { value: "draft", label: "Draft (hidden from site)" },
+          { value: "published", label: "Yayında" },
+          { value: "draft", label: "Taslak (sitede gizli)" },
         ]}
       />
-      <AdminField name="read_time" label="Read time (minutes)" defaultValue={String(post.readTimeMinutes)} />
+      <AdminField name="read_time" label="Okuma süresi (dakika)" defaultValue={String(post.readTimeMinutes)} />
       <div className="flex items-center gap-4 lg:col-span-2">
         <AdminSubmit />
         <AdminResult state={state} />

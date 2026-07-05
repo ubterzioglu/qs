@@ -23,12 +23,12 @@ export default async function AdminSettingsPage() {
 
   return (
     <div>
-      <p className="qs-label">Configuration</p>
-      <h1 className="qs-display mt-2 text-3xl text-[var(--color-cream)]">Site settings</h1>
+      <p className="qs-label">Yapılandırma</p>
+      <h1 className="qs-display mt-2 text-3xl text-[var(--color-cream)]">Site ayarları</h1>
 
       <SettingsForm brandName={brandName} contactEmail={contactEmail} />
 
-      <h2 className="qs-label mt-12">Offices (read-only)</h2>
+      <h2 className="qs-label mt-12">Ofisler (salt okunur)</h2>
       <ul className="mt-3 space-y-2">
         {locations.map((l) => (
           <li key={l.city} className="text-sm text-[var(--color-mist)]">
@@ -37,8 +37,8 @@ export default async function AdminSettingsPage() {
         ))}
       </ul>
       <p className="mt-6 text-xs text-[var(--color-slate)]">
-        Office addresses are managed in the database (locations table); an editor UI can be
-        added when needed.
+        Ofis adresleri veritabanında (locations tablosu) yönetilir; gerektiğinde bir
+        düzenleme arayüzü eklenebilir.
       </p>
     </div>
   );

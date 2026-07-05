@@ -93,21 +93,21 @@ export function AdminSelect({
   );
 }
 
-export function AdminSubmit({ label = "Save" }: { label?: string }) {
+export function AdminSubmit({ label = "Kaydet" }: { label?: string }) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" disabled={pending} className="qs-btn disabled:opacity-50">
-      {pending ? "Saving…" : label}
+      {pending ? "Kaydediliyor…" : label}
     </button>
   );
 }
 
 export function AdminResult({ state }: { state: AdminActionState }) {
   if (state.status === "saved") {
-    return <p className="border border-[var(--color-brass)] px-3 py-2 text-sm text-[var(--color-brass-hi)]">{state.message ?? "Saved."}</p>;
+    return <p className="border border-[var(--color-brass)] px-3 py-2 text-sm text-[var(--color-brass-hi)]">{state.message ?? "Kaydedildi."}</p>;
   }
   if (state.status === "error") {
-    return <p className="border border-red-800 px-3 py-2 text-sm text-red-300">{state.message ?? "Error."}</p>;
+    return <p className="border border-red-800 px-3 py-2 text-sm text-red-300">{state.message ?? "Hata."}</p>;
   }
   return null;
 }

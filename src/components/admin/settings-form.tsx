@@ -17,8 +17,8 @@ export function SettingsForm({
 
   return (
     <form action={action} className="mt-8 grid max-w-xl gap-6">
-      <AdminField name="brand_name" label="Brand name" defaultValue={brandName} required />
-      <AdminField name="contact_email" label="Contact email" defaultValue={contactEmail} required />
+      <AdminField name="brand_name" label="Marka adı" defaultValue={brandName} required />
+      <AdminField name="contact_email" label="İletişim e-postası" defaultValue={contactEmail} required />
       <div className="flex items-center gap-4">
         <AdminSubmit />
         <AdminResult state={state} />

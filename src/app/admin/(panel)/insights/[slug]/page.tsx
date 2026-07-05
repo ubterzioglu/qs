@@ -31,9 +31,11 @@ export default async function AdminPostEdit({
   return (
     <div>
       <Link href="/admin/insights" className="qs-label text-[var(--color-slate)] hover:text-[var(--color-mist)]">
-        ← Insights
+        ← İçgörüler
       </Link>
-      <h1 className="qs-display mt-4 text-3xl text-[var(--color-cream)]">{post.title.en ?? slug}</h1>
+      <h1 className="qs-display mt-4 text-3xl text-[var(--color-cream)]">
+        {post.title.tr ?? post.title.en ?? slug}
+      </h1>
       <PostEditForm post={post} />
     </div>
   );

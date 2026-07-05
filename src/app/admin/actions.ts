@@ -5,16 +5,7 @@
  * (requireAdmin) before using the service-role client — never trust the UI.
  */
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { cookies, headers } from "next/headers";
 import { requireAdmin } from "@/lib/admin/auth";
-import {
-  ADMIN_COOKIE,
-  SESSION_COOKIE_OPTIONS,
-  createSessionToken,
-  verifyPassword,
-} from "@/lib/admin/session";
-import { isAdminConfigured } from "@/lib/env.server";
 import { createServiceClient } from "@/lib/supabase/server";
 
 function str(form: FormData, key: string, max = 4000): string {
@@ -22,35 +13,8 @@ function str(form: FormData, key: string, max = 4000): string {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
 }
 
-export type LoginState = { status: "idle" | "error"; message?: string };
-
-/** Single-password login: verify the password, then set a signed session cookie. */
-export async function loginAction(
-  _prev: LoginState,
-  form: FormData,
-): Promise<LoginState> {
-  if (!isAdminConfigured) {
-    return { status: "error", message: "Admin login is not configured on this deployment." };
-  }
-  const password = typeof form.get("password") === "string" ? String(form.get("password")) : "";
-  if (!verifyPassword(password)) {
-    return { status: "error", message: "Incorrect password." };
-  }
-
-  const token = await createSessionToken();
-  const proto = (await headers()).get("x-forwarded-proto");
-  const secure = proto ? proto === "https" : process.env.NODE_ENV === "production";
-  const store = await cookies();
-  store.set(ADMIN_COOKIE, token, { ...SESSION_COOKIE_OPTIONS, secure });
-
-  redirect("/admin");
-}
-
-export async function signOutAction() {
-  const store = await cookies();
-  store.delete(ADMIN_COOKIE);
-  redirect("/admin/login");
-}
+// Login + logout live in API routes (src/app/api/admin/{login,logout}) so the
+// client is never coupled to a build-specific Server Action id.
 
 export type AdminActionState = { status: "idle" | "saved" | "error"; message?: string };
 
@@ -61,10 +25,10 @@ export async function updateServiceAction(
 ): Promise<AdminActionState> {
   await requireAdmin();
   const db = createServiceClient();
-  if (!db) return { status: "error", message: "Service key not configured." };
+  if (!db) return { status: "error", message: "Servis anahtarı yapılandırılmamış." };
 
   const titleEn = str(form, "title_en", 200);
-  if (!titleEn) return { status: "error", message: "English title is required." };
+  if (!titleEn) return { status: "error", message: "İngilizce başlık zorunludur." };
 
   const { error } = await db
     .from("services")
@@ -84,7 +48,7 @@ export async function updateServiceAction(
 
   if (error) return { status: "error", message: error.message };
   revalidatePath("/", "layout");
-  return { status: "saved", message: "Saved." };
+  return { status: "saved", message: "Kaydedildi." };
 }
 
 export async function updateBlogPostAction(
@@ -94,10 +58,10 @@ export async function updateBlogPostAction(
 ): Promise<AdminActionState> {
   await requireAdmin();
   const db = createServiceClient();
-  if (!db) return { status: "error", message: "Service key not configured." };
+  if (!db) return { status: "error", message: "Servis anahtarı yapılandırılmamış." };
 
   const titleEn = str(form, "title_en", 300);
-  if (!titleEn) return { status: "error", message: "English title is required." };
+  if (!titleEn) return { status: "error", message: "İngilizce başlık zorunludur." };
   const status = str(form, "status", 20) === "draft" ? "draft" : "published";
   const readTime = Math.max(1, Math.min(60, Number(str(form, "read_time", 4)) || 2));
 
@@ -117,7 +81,7 @@ export async function updateBlogPostAction(
 
   if (error) return { status: "error", message: error.message };
   revalidatePath("/", "layout");
-  return { status: "saved", message: "Saved." };
+  return { status: "saved", message: "Kaydedildi." };
 }
 
 // ============================ revision requests ============================
@@ -128,10 +92,10 @@ export async function createRevisionAction(
 ): Promise<AdminActionState> {
   await requireAdmin();
   const db = createServiceClient();
-  if (!db) return { status: "error", message: "Service key not configured." };
+  if (!db) return { status: "error", message: "Servis anahtarı yapılandırılmamış." };
 
   const title = str(form, "title", 300);
-  if (!title) return { status: "error", message: "Title is required." };
+  if (!title) return { status: "error", message: "Başlık zorunludur." };
   const priority = ["low", "normal", "high"].includes(str(form, "priority", 10))
     ? str(form, "priority", 10)
     : "normal";
@@ -147,7 +111,7 @@ export async function createRevisionAction(
 
   if (error) return { status: "error", message: error.message };
   revalidatePath("/admin/revisions");
-  return { status: "saved", message: "Revision request created." };
+  return { status: "saved", message: "Revizyon isteği oluşturuldu." };
 }
 
 export async function addRevisionCommentAction(
@@ -157,10 +121,10 @@ export async function addRevisionCommentAction(
 ): Promise<AdminActionState> {
   await requireAdmin();
   const db = createServiceClient();
-  if (!db) return { status: "error", message: "Service key not configured." };
+  if (!db) return { status: "error", message: "Servis anahtarı yapılandırılmamış." };
 
   const body = str(form, "body", 8000);
-  if (!body) return { status: "error", message: "Comment cannot be empty." };
+  if (!body) return { status: "error", message: "Yorum boş olamaz." };
   const author = str(form, "author", 120) || "admin";
 
   const { error } = await db.from("revision_comments").insert({
@@ -171,7 +135,7 @@ export async function addRevisionCommentAction(
 
   if (error) return { status: "error", message: error.message };
   revalidatePath(`/admin/revisions/${requestId}`);
-  return { status: "saved", message: "Comment added." };
+  return { status: "saved", message: "Yorum eklendi." };
 }
 
 export async function setRevisionStatusAction(requestId: string, status: string) {
@@ -198,7 +162,7 @@ export async function updateSiteSettingsAction(
 ): Promise<AdminActionState> {
   await requireAdmin();
   const db = createServiceClient();
-  if (!db) return { status: "error", message: "Service key not configured." };
+  if (!db) return { status: "error", message: "Servis anahtarı yapılandırılmamış." };
 
   const brandName = str(form, "brand_name", 120) || "Qualtron Sinclair";
   const contactEmail = str(form, "contact_email", 200);
@@ -211,5 +175,5 @@ export async function updateSiteSettingsAction(
 
   if (error) return { status: "error", message: error.message };
   revalidatePath("/", "layout");
-  return { status: "saved", message: "Saved." };
+  return { status: "saved", message: "Kaydedildi." };
 }

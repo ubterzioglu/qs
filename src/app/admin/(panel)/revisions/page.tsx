@@ -4,9 +4,9 @@ import { createServiceClient } from "@/lib/supabase/server";
 import { NewRevisionForm } from "@/components/admin/revision-forms";
 
 const STATUS_LABEL: Record<string, string> = {
-  open: "Open",
-  in_progress: "In progress",
-  done: "Done",
+  open: "Açık",
+  in_progress: "Devam ediyor",
+  done: "Tamamlandı",
 };
 const STATUS_COLOR: Record<string, string> = {
   open: "text-[var(--color-brass)]",
@@ -28,8 +28,12 @@ export default async function RevisionsPage() {
 
   return (
     <div>
-      <p className="qs-label">Workflow</p>
-      <h1 className="qs-display mt-2 text-3xl text-[var(--color-cream)]">Revision requests</h1>
+      <p className="qs-label">İş akışı</p>
+      <h1 className="qs-display mt-2 text-3xl text-[var(--color-cream)]">Revizyon istekleri</h1>
+      <p className="mt-2 text-sm text-[var(--color-mist)]">
+        Sitede yapılmasını istediğiniz değişiklikleri kaydedin, durumlarını izleyin ve
+        altına yorum ekleyin.
+      </p>
 
       <div className="mt-8">
         <NewRevisionForm />
@@ -38,7 +42,7 @@ export default async function RevisionsPage() {
       <div className="mt-10 grid gap-px border border-[var(--color-navy-line)] bg-[var(--color-navy-line)]">
         {(rows ?? []).length === 0 && (
           <p className="bg-[var(--color-navy)] px-5 py-6 text-sm text-[var(--color-slate)]">
-            No revision requests yet — create the first one above.
+            Henüz revizyon isteği yok — ilkini yukarıdan oluşturun.
           </p>
         )}
         {(rows ?? []).map((r) => (
@@ -52,7 +56,7 @@ export default async function RevisionsPage() {
                 {STATUS_LABEL[r.status] ?? r.status}
               </span>
               {r.priority === "high" && (
-                <span className="qs-label shrink-0 text-red-400">High</span>
+                <span className="qs-label shrink-0 text-red-400">Yüksek</span>
               )}
               <span className="truncate text-[var(--color-cream)]">{r.title}</span>
             </span>

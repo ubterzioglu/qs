@@ -15,24 +15,25 @@ export function NewRevisionForm() {
 
   return (
     <form action={action} className="grid gap-5 border border-[var(--color-navy-line)] bg-[var(--color-navy)] p-6">
-      <p className="qs-label">New revision request</p>
-      <AdminField name="title" label="Title" required />
+      <p className="qs-label">Yeni revizyon isteği</p>
+      <AdminField name="title" label="Başlık" required />
       <div className="grid gap-5 sm:grid-cols-2">
-        <AdminField name="page" label="Page / section (e.g. /services/legal-compliance)" />
+        <AdminField name="page" label="Sayfa / bölüm (örn. /services/legal-compliance)" />
         <AdminSelect
           name="priority"
-          label="Priority"
+          label="Öncelik"
           defaultValue="normal"
           options={[
-            { value: "low", label: "Low" },
+            { value: "low", label: "Düşük" },
             { value: "normal", label: "Normal" },
-            { value: "high", label: "High" },
+            { value: "high", label: "Yüksek" },
           ]}
         />
       </div>
-      <AdminTextArea name="description" label="What should change?" rows={4} />
+      <AdminField name="author" label="Adınız (opsiyonel)" />
+      <AdminTextArea name="description" label="Ne değişmeli?" rows={4} />
       <div className="flex items-center gap-4">
-        <AdminSubmit label="Create request" />
+        <AdminSubmit label="İstek oluştur" />
         <AdminResult state={state} />
       </div>
     </form>
@@ -47,9 +48,10 @@ export function RevisionCommentForm({ requestId }: { requestId: string }) {
 
   return (
     <form action={action} className="grid gap-4">
-      <AdminTextArea name="body" label="Add a comment" rows={3} required />
+      <AdminField name="author" label="Adınız (opsiyonel)" />
+      <AdminTextArea name="body" label="Yorum ekle" rows={3} required />
       <div className="flex items-center gap-4">
-        <AdminSubmit label="Comment" />
+        <AdminSubmit label="Yorum yap" />
         <AdminResult state={state} />
       </div>
     </form>

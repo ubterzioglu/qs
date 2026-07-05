@@ -5,17 +5,17 @@
 export const SUBMISSION_KINDS = {
   contact: {
     table: "contact_messages",
-    label: "Contact messages",
+    label: "İletişim mesajları",
     columns: ["created_at", "first_name", "last_name", "email", "phone", "message"],
   },
   careers: {
     table: "career_applications",
-    label: "Career applications",
+    label: "Kariyer başvuruları",
     columns: ["created_at", "first_name", "last_name", "dob", "email", "phone", "resume_url"],
   },
   innoventure: {
     table: "innoventure_applications",
-    label: "InnoVenture applications",
+    label: "InnoVenture başvuruları",
     columns: [
       "created_at",
       "first_name",
@@ -32,7 +32,7 @@ export const SUBMISSION_KINDS = {
   },
   "startup-hub": {
     table: "startup_hub_submissions",
-    label: "Start-up Hub submissions",
+    label: "Girişim Merkezi gönderileri",
     columns: ["created_at", "first_name", "last_name", "email", "company", "file_url", "message"],
   },
 } as const;

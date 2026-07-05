@@ -29,10 +29,10 @@ export default async function AdminServiceEdit({
   return (
     <div>
       <Link href="/admin/services" className="qs-label text-[var(--color-slate)] hover:text-[var(--color-mist)]">
-        ← Services
+        ← Hizmetler
       </Link>
       <h1 className="qs-display mt-4 text-3xl text-[var(--color-cream)]">
-        {service.title.en ?? slug}
+        {service.title.tr ?? service.title.en ?? slug}
         <span className="ml-3 qs-label align-middle text-[var(--color-brass)]">{row.code}</span>
       </h1>
       <ServiceEditForm service={service} />

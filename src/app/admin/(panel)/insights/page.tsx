@@ -14,8 +14,9 @@ export default async function AdminInsightsList() {
 
   return (
     <div>
-      <p className="qs-label">Content</p>
-      <h1 className="qs-display mt-2 text-3xl text-[var(--color-cream)]">Insights</h1>
+      <p className="qs-label">İçerik</p>
+      <h1 className="qs-display mt-2 text-3xl text-[var(--color-cream)]">İçgörüler</h1>
+      <p className="mt-2 text-sm text-[var(--color-mist)]">Blog yazılarını düzenleyin (EN + TR, taslak).</p>
 
       <div className="mt-8 grid gap-px border border-[var(--color-navy-line)] bg-[var(--color-navy-line)]">
         {(rows ?? []).map((r) => (
@@ -26,15 +27,18 @@ export default async function AdminInsightsList() {
           >
             <span className="flex items-center gap-4">
               <span className={`qs-label ${r.status === "draft" ? "text-[var(--color-slate)]" : "text-[var(--color-brass)]"}`}>
-                {r.status}
+                {r.status === "draft" ? "taslak" : "yayında"}
               </span>
               <span className="text-[var(--color-cream)]">
-                {(r.title as { en?: string })?.en ?? r.slug}
+                {(r.title as { tr?: string; en?: string })?.tr ?? (r.title as { en?: string })?.en ?? r.slug}
               </span>
             </span>
             <span className="qs-label">{r.published_at} · {r.author}</span>
           </Link>
         ))}
+        {(rows ?? []).length === 0 && (
+          <p className="bg-[var(--color-navy)] px-5 py-6 text-sm text-[var(--color-slate)]">Kayıt yok.</p>
+        )}
       </div>
     </div>
   );

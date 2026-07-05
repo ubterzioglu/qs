@@ -6,10 +6,11 @@ import { setRevisionStatusAction } from "@/app/admin/actions";
 import { RevisionCommentForm } from "@/components/admin/revision-forms";
 
 const STATUSES = [
-  { value: "open", label: "Open" },
-  { value: "in_progress", label: "In progress" },
-  { value: "done", label: "Done" },
+  { value: "open", label: "Açık" },
+  { value: "in_progress", label: "Devam ediyor" },
+  { value: "done", label: "Tamamlandı" },
 ];
+const PRIORITY_TR: Record<string, string> = { low: "düşük", normal: "normal", high: "yüksek" };
 
 export default async function RevisionDetailPage({
   params,
@@ -18,7 +19,6 @@ export default async function RevisionDetailPage({
 }) {
   await requireAdmin();
   const { id } = await params;
-  // Basic UUID shape check before querying.
   if (!/^[0-9a-f-]{36}$/i.test(id)) notFound();
 
   const db = createServiceClient();
@@ -38,7 +38,7 @@ export default async function RevisionDetailPage({
   return (
     <div className="max-w-3xl">
       <Link href="/admin/revisions" className="qs-label text-[var(--color-slate)] hover:text-[var(--color-mist)]">
-        ← Revision requests
+        ← Revizyon istekleri
       </Link>
 
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
@@ -46,7 +46,8 @@ export default async function RevisionDetailPage({
           <h1 className="qs-display text-3xl text-[var(--color-cream)]">{r.title}</h1>
           <p className="qs-label mt-2">
             {r.page && <span className="mr-3">{r.page}</span>}
-            priority: {r.priority} · by {r.created_by} · {String(r.created_at).slice(0, 16).replace("T", " ")}
+            öncelik: {PRIORITY_TR[r.priority] ?? r.priority} · ekleyen {r.created_by} ·{" "}
+            {String(r.created_at).slice(0, 16).replace("T", " ")}
           </p>
         </div>
         <div className="flex gap-2">
@@ -74,7 +75,7 @@ export default async function RevisionDetailPage({
         </div>
       )}
 
-      <h2 className="qs-label mt-10">Comments ({comments.data?.length ?? 0})</h2>
+      <h2 className="qs-label mt-10">Yorumlar ({comments.data?.length ?? 0})</h2>
       <ul className="mt-3 space-y-3">
         {(comments.data ?? []).map((c) => (
           <li key={c.id} className="border border-[var(--color-navy-line)] bg-[var(--color-navy)] p-4">
@@ -87,7 +88,7 @@ export default async function RevisionDetailPage({
           </li>
         ))}
         {(comments.data ?? []).length === 0 && (
-          <li className="text-sm text-[var(--color-slate)]">No comments yet.</li>
+          <li className="text-sm text-[var(--color-slate)]">Henüz yorum yok.</li>
         )}
       </ul>
 
