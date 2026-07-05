@@ -3,7 +3,7 @@
  * GET /admin/export/[kind] -> text/csv attachment.
  */
 import { NextResponse } from "next/server";
-import { getAdminUser } from "@/lib/admin/auth";
+import { isAdmin } from "@/lib/admin/auth";
 import { createServiceClient } from "@/lib/supabase/server";
 import { SUBMISSION_KINDS, isSubmissionKind } from "@/lib/admin/submissions";
 
@@ -23,8 +23,7 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ kind: string }> },
 ) {
-  const user = await getAdminUser();
-  if (!user) return new NextResponse("Unauthorized", { status: 401 });
+  if (!(await isAdmin())) return new NextResponse("Unauthorized", { status: 401 });
 
   const { kind } = await params;
   if (!isSubmissionKind(kind)) return new NextResponse("Not found", { status: 404 });

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
-import { updateAdminSession } from "./lib/supabase/middleware";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -11,13 +10,14 @@ function maintenanceOn() {
   return /^(1|true|on)$/i.test(process.env.MAINTENANCE_MODE ?? "");
 }
 
-export default async function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // /admin: refresh the Supabase session; never locale-routed, never blocked
-  // by maintenance mode (so the site stays manageable during a takeover).
+  // /admin authenticates itself via the signed session cookie (checked in each
+  // page/action). It is never locale-routed and stays reachable during
+  // maintenance so the site is manageable during a takeover.
   if (pathname.startsWith("/admin")) {
-    return updateAdminSession(request);
+    return NextResponse.next();
   }
 
   // /maintenance lives outside the [locale] tree — never hand it to intl routing.
@@ -46,7 +46,7 @@ export const config = {
   matcher: [
     // Public paths: everything except API, Next internals, and files with extensions.
     "/((?!api|_next|_vercel|.*\\..*).*)",
-    // Admin: match ALL /admin paths (even dotted segments) so session refresh always runs.
+    // Admin: match ALL /admin paths (even dotted segments).
     "/admin/:path*",
   ],
 };

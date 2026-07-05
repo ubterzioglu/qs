@@ -6,32 +6,50 @@
  */
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireAdmin, getAdminUser } from "@/lib/admin/auth";
-import { createServerClient, createServiceClient } from "@/lib/supabase/server";
+import { cookies, headers } from "next/headers";
+import { requireAdmin } from "@/lib/admin/auth";
+import {
+  ADMIN_COOKIE,
+  SESSION_COOKIE_OPTIONS,
+  createSessionToken,
+  verifyPassword,
+} from "@/lib/admin/session";
+import { isAdminConfigured } from "@/lib/env.server";
+import { createServiceClient } from "@/lib/supabase/server";
 
 function str(form: FormData, key: string, max = 4000): string {
   const v = form.get(key);
   return typeof v === "string" ? v.trim().slice(0, max) : "";
 }
 
-export async function signOutAction() {
-  const supabase = await createServerClient();
-  if (supabase) await supabase.auth.signOut();
-  redirect("/admin/login");
+export type LoginState = { status: "idle" | "error"; message?: string };
+
+/** Single-password login: verify the password, then set a signed session cookie. */
+export async function loginAction(
+  _prev: LoginState,
+  form: FormData,
+): Promise<LoginState> {
+  if (!isAdminConfigured) {
+    return { status: "error", message: "Admin login is not configured on this deployment." };
+  }
+  const password = typeof form.get("password") === "string" ? String(form.get("password")) : "";
+  if (!verifyPassword(password)) {
+    return { status: "error", message: "Incorrect password." };
+  }
+
+  const token = await createSessionToken();
+  const proto = (await headers()).get("x-forwarded-proto");
+  const secure = proto ? proto === "https" : process.env.NODE_ENV === "production";
+  const store = await cookies();
+  store.set(ADMIN_COOKIE, token, { ...SESSION_COOKIE_OPTIONS, secure });
+
+  redirect("/admin");
 }
 
-/**
- * Called by the login form after a successful password sign-in. Confirms the
- * signed-in user is on the ADMIN_EMAILS allowlist; if not, signs them out so
- * they don't get stuck in a login→/admin→login redirect loop. Returns whether
- * the caller should proceed to /admin.
- */
-export async function confirmAdminAccess(): Promise<{ ok: boolean; message?: string }> {
-  const user = await getAdminUser();
-  if (user) return { ok: true };
-  const supabase = await createServerClient();
-  if (supabase) await supabase.auth.signOut();
-  return { ok: false, message: "This account is not authorized for the admin panel." };
+export async function signOutAction() {
+  const store = await cookies();
+  store.delete(ADMIN_COOKIE);
+  redirect("/admin/login");
 }
 
 export type AdminActionState = { status: "idle" | "saved" | "error"; message?: string };
@@ -108,7 +126,7 @@ export async function createRevisionAction(
   _prev: AdminActionState,
   form: FormData,
 ): Promise<AdminActionState> {
-  const user = await requireAdmin();
+  await requireAdmin();
   const db = createServiceClient();
   if (!db) return { status: "error", message: "Service key not configured." };
 
@@ -117,13 +135,14 @@ export async function createRevisionAction(
   const priority = ["low", "normal", "high"].includes(str(form, "priority", 10))
     ? str(form, "priority", 10)
     : "normal";
+  const author = str(form, "author", 120) || "admin";
 
   const { error } = await db.from("revision_requests").insert({
     title,
     description: str(form, "description", 8000),
     page: str(form, "page", 300),
     priority,
-    created_by: user.email ?? "admin",
+    created_by: author,
   });
 
   if (error) return { status: "error", message: error.message };
@@ -136,16 +155,17 @@ export async function addRevisionCommentAction(
   _prev: AdminActionState,
   form: FormData,
 ): Promise<AdminActionState> {
-  const user = await requireAdmin();
+  await requireAdmin();
   const db = createServiceClient();
   if (!db) return { status: "error", message: "Service key not configured." };
 
   const body = str(form, "body", 8000);
   if (!body) return { status: "error", message: "Comment cannot be empty." };
+  const author = str(form, "author", 120) || "admin";
 
   const { error } = await db.from("revision_comments").insert({
     request_id: requestId,
-    author: user.email ?? "admin",
+    author,
     body,
   });
 

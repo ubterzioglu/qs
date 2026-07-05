@@ -50,15 +50,22 @@ so changing those only needs a container **restart/redeploy** (no rebuild requir
 
 ## Admin panel (/admin)
 
-The admin console requires all four Supabase variables **plus** `ADMIN_EMAILS`.
-Sign-in = Supabase Auth email/password AND the email must be in `ADMIN_EMAILS`.
+Login is a **single password** (no email). Set two runtime env vars:
 
-One-time bootstrap (run locally with `.env.local` filled):
+- `ADMIN_PASSWORD` — the password you type at `/admin/login`.
+- `ADMIN_SESSION_SECRET` — signs the session cookie. Generate a random value:
+  `node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"`.
+
+On success the server sets an HttpOnly, HMAC-signed cookie (12h). The password
+never reaches the browser; forged/expired cookies are rejected. Content writes
+still use `SUPABASE_SERVICE_ROLE_KEY` server-side, so the CMS also needs the
+Supabase vars.
+
+One-time content seed (run locally with `.env.local` filled):
 
 ```bash
-pnpm seed                            # push seed content into the DB tables
-pnpm tsx scripts/create-admin.ts     # create the admin auth user (ADMIN_SEED_*)
-pnpm tsx scripts/verify-rls.ts       # security smoke test (RLS boundaries)
+pnpm seed                       # push seed content into the DB tables
+pnpm tsx scripts/verify-rls.ts  # security smoke test (RLS boundaries)
 ```
 
 Features: dashboard, form-submission inbox with CSV export, service/insight

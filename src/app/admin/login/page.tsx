@@ -1,45 +1,13 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { createBrowserSupabase } from "@/lib/supabase/client";
-import { confirmAdminAccess } from "../actions";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { loginAction, type LoginState } from "../actions";
+
+const initial: LoginState = { status: "idle" };
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
-    const supabase = createBrowserSupabase();
-    if (!supabase) {
-      setError("Supabase is not configured on this deployment.");
-      return;
-    }
-    setPending(true);
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
-      password,
-    });
-    if (signInError) {
-      setPending(false);
-      setError("Invalid email or password.");
-      return;
-    }
-    // Credentials are valid, but the account must also be on the ADMIN_EMAILS
-    // allowlist. Confirm server-side (and sign out if not) to avoid a redirect loop.
-    const access = await confirmAdminAccess();
-    if (!access.ok) {
-      await supabase.auth.signOut();
-      setPending(false);
-      setError(access.message ?? "This account is not authorized.");
-      return;
-    }
-    // Full navigation so the fresh auth cookies reach the server components.
-    window.location.assign("/admin");
-  }
+  const [state, action] = useActionState(loginAction, initial);
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6">
@@ -53,44 +21,40 @@ export default function AdminLoginPage() {
         </div>
 
         <form
-          onSubmit={onSubmit}
+          action={action}
           className="space-y-5 border border-[var(--color-navy-line)] bg-[var(--color-navy)] p-8"
         >
-          <label className="block">
-            <span className="qs-label">Email</span>
-            <input
-              type="email"
-              required
-              autoComplete="username"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 w-full border border-[var(--color-navy-line)] bg-[var(--color-obsidian)] px-3 py-2.5 text-[var(--color-cream)] outline-none focus:border-[var(--color-brass)]"
-            />
-          </label>
           <label className="block">
             <span className="qs-label">Password</span>
             <input
               type="password"
+              name="password"
               required
+              autoFocus
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className="mt-2 w-full border border-[var(--color-navy-line)] bg-[var(--color-obsidian)] px-3 py-2.5 text-[var(--color-cream)] outline-none focus:border-[var(--color-brass)]"
             />
           </label>
 
-          {error && (
+          {state.status === "error" && (
             <p className="border border-[var(--color-brass-deep)] px-3 py-2 text-sm text-[var(--color-brass-hi)]">
-              {error}
+              {state.message ?? "Incorrect password."}
             </p>
           )}
 
-          <button type="submit" disabled={pending} className="qs-btn w-full justify-center disabled:opacity-50">
-            {pending ? "Signing in…" : "Sign in"}
-          </button>
+          <SubmitButton />
         </form>
       </div>
     </main>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button type="submit" disabled={pending} className="qs-btn w-full justify-center disabled:opacity-50">
+      {pending ? "Signing in…" : "Sign in"}
+    </button>
   );
 }
 

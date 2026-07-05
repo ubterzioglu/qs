@@ -13,7 +13,7 @@ const NAV = [
 ];
 
 export default async function AdminPanelLayout({ children }: { children: ReactNode }) {
-  const user = await requireAdmin();
+  await requireAdmin();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -32,7 +32,6 @@ export default async function AdminPanelLayout({ children }: { children: ReactNo
             </nav>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-xs text-[var(--color-slate)]">{user.email}</span>
             <form action={signOutAction}>
               <button type="submit" className="qs-label text-[var(--color-mist)] hover:text-[var(--color-brass-hi)]">
                 Sign out
