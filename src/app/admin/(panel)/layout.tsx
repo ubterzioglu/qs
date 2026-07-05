@@ -8,6 +8,7 @@ const NAV = [
   { href: "/admin/revisions", label: "Revizyon İstekleri", icon: "flag" },
   { href: "/admin/services", label: "Hizmetler", icon: "layers" },
   { href: "/admin/insights", label: "İçgörüler", icon: "doc" },
+  { href: "/admin/updates", label: "Güncellemeler", icon: "spark" },
   { href: "/admin/settings", label: "Ayarlar", icon: "gear" },
 ] as const;
 
@@ -96,6 +97,7 @@ function NavIcon({ name }: { name: string }) {
     flag: <><path d="M3 2v12" /><path d="M3 3h9l-2 3 2 3H3" /></>,
     layers: <><path d="M8 2l6 3-6 3-6-3z" /><path d="M2 8l6 3 6-3" /><path d="M2 11l6 3 6-3" /></>,
     doc: <><path d="M4 2h6l2 2v10H4z" /><path d="M6 6h4M6 9h4M6 12h2" /></>,
+    spark: <><path d="M8 1.5l1.6 4.9 4.9 1.6-4.9 1.6L8 14.5l-1.6-4.9L1.5 8l4.9-1.6z" /></>,
     gear: <><circle cx="8" cy="8" r="2.5" /><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.5 1.5M11.5 11.5L13 13M13 3l-1.5 1.5M4.5 11.5L3 13" /></>,
     external: <><path d="M6 3H3v10h10v-3" /><path d="M9 3h4v4M13 3L7 9" /></>,
     logout: <><path d="M6 3H3v10h3" /><path d="M9 8h6M12 5l3 3-3 3" /></>,
