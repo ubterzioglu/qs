@@ -11,11 +11,15 @@ provided by the client) for a clean production launch. Adapted from
   (current `public/media/*` are the best public-CDN versions available)
 
 ## 2. Blog content — full bodies
-Only **Clone Age** was publicly readable in full. Bodies are stubbed (marked
-"pending migration") for:
-- `beyond-intelligence-autonomous-digital-agents`
-- `digital-fabric-of-cities`
-Also needed: authors, exact dates, categories/tags, SEO title/description per post.
+✅ **DONE.** All 4 posts now have full bodies, real slugs, authors, dates, and cover
+images, imported from the Wix Blog API export in `ref/content/` (2026-07-05):
+- `beyond-intelligence-the-rise-of-autonomous-digital-agents`
+- `the-digital-fabric-of-cities-smart-ecosystems-and-civic-ai`
+- `clone-age-2` (author: Burak Akçakanat) — newly added
+- `clone-age` (author: Burak Akçakanat) — full EN + real TR translation
+Covers downloaded to `public/media/blog/`. Old Wix post slugs 301-redirect to the new ones.
+Remaining (nice-to-have): full TR translations for the two English-only posts (currently
+condensed TR), and per-post SEO title/description + categories/tags.
 
 ## 3. Portfolio details
 Portfolio page was image-based. Provide, per item:

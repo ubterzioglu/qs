@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
       ["/blog", "/insights"],
       ["/contact-3", "/contact"],
       ["/about-5", "/"],
+      // Old Wix blog post slugs (incl. Turkish originals) -> new insight slugs.
+      ["/post/qualtron-sinclair-modern-ve-kurumsal-landing-page-tasarımı", "/insights/clone-age"],
+      ["/post/qualtron-sinclair-minimalist-ve-zarif-landing-page-tasarımı", "/insights/clone-age-2"],
+      ["/post/qualtron-sinclair-yüksek-güven-ve-düşük-gürültülü-tasarım", "/insights/the-digital-fabric-of-cities-smart-ecosystems-and-civic-ai"],
+      ["/post/:slug", "/insights/:slug"],
     ];
     return map.map(([source, destination]) => ({ source, destination, permanent: true }));
   },
