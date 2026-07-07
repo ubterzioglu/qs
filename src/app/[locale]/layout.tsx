@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { env } from "@/lib/env";
 import { SITE, altLanguages } from "@/lib/seo";
-import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/json-ld";
+import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from "@/components/json-ld";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -78,6 +78,12 @@ export async function generateMetadata({
       apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
     },
     manifest: "/manifest.webmanifest",
+    other: {
+      "geo.region": SITE.primaryGeo.region,
+      "geo.placename": SITE.primaryGeo.placename,
+      "geo.position": `${SITE.primaryGeo.lat};${SITE.primaryGeo.lng}`,
+      ICBM: `${SITE.primaryGeo.lat}, ${SITE.primaryGeo.lng}`,
+    },
   };
 }
 
@@ -97,6 +103,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider>
       <OrganizationJsonLd locale={loc} />
       <WebSiteJsonLd locale={loc} />
+      <LocalBusinessJsonLd />
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
         <main className="flex-1">{children}</main>

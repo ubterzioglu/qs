@@ -62,6 +62,15 @@ export async function SiteFooter() {
               </li>
               <li>
                 <a
+                  href="https://ufuksoynakliyat.com.tr/pendik-evden-eve-nakliyat"
+                  rel="dofollow"
+                  className="text-[var(--color-graphite)] hover:text-[var(--color-ink)]"
+                >
+                  Pendik Evden Eve Nakliyat
+                </a>
+              </li>
+              <li>
+                <a
                   href={`mailto:${settings.contactEmail}`}
                   className="text-[var(--color-graphite)] hover:text-[var(--color-ink)]"
                 >

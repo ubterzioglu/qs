@@ -41,11 +41,41 @@ export const SITE = {
     .filter((s) => /^https?:\/\//.test(s)),
   email: "contact@qualtronsinclair.com",
   offices: [
-    { city: "Doha", country: "Qatar", region: "QA", locality: "Doha" },
-    { city: "Dubai", country: "United Arab Emirates", region: "AE", locality: "Dubai" },
-    { city: "İstanbul", country: "Türkiye", region: "TR", locality: "İstanbul" },
-    { city: "Delaware", country: "United States", region: "US-DE", locality: "Delaware" },
+    {
+      city: "Doha",
+      country: "Qatar",
+      region: "QA",
+      locality: "Doha",
+      streetAddress: "Y2 Village, Building 3, 205",
+      geo: { lat: 25.3221, lng: 51.4297 },
+    },
+    {
+      city: "Dubai",
+      country: "United Arab Emirates",
+      region: "AE",
+      locality: "Dubai",
+      streetAddress: "Reef Tower, 30th Floor, No30-33, O1 Cluster, O Street, JLT",
+      geo: { lat: 25.0693, lng: 55.1397 },
+    },
+    {
+      city: "İstanbul",
+      country: "Türkiye",
+      region: "TR",
+      locality: "İstanbul",
+      streetAddress: "Yapı Kredi Plaza C Blok K:8 No 23, 4. Levent",
+      postalCode: "34330",
+      geo: { lat: 41.0819, lng: 29.0089 },
+    },
+    {
+      city: "Delaware",
+      country: "United States",
+      region: "US-DE",
+      locality: "Delaware",
+      geo: { lat: 39.1582, lng: -75.5244 },
+    },
   ],
+  // Primary geo target for classic geo.* meta tags — HQ/lead office (Istanbul).
+  primaryGeo: { region: "TR-34", placename: "İstanbul", lat: 41.0819, lng: 29.0089 },
   areaServed: ["MENA", "United Arab Emirates", "Qatar", "Saudi Arabia", "Türkiye", "GCC"],
 };
 

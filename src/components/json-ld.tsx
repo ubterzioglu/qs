@@ -44,11 +44,52 @@ export function OrganizationJsonLd({ locale }: { locale: Locale }) {
         ],
         address: SITE.offices.map((o) => ({
           "@type": "PostalAddress",
+          streetAddress: o.streetAddress,
           addressLocality: o.locality,
+          addressRegion: o.region,
+          postalCode: o.postalCode,
           addressCountry: o.country,
         })),
       }}
     />
+  );
+}
+
+/** One LocalBusiness/Place entry per office — strengthens local/map geo signals. */
+export function LocalBusinessJsonLd() {
+  return (
+    <>
+      {SITE.offices.map((o) => (
+        <Ld
+          key={o.city}
+          data={{
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "@id": `${SITE.url}#office-${o.city.toLowerCase()}`,
+            name: `${SITE.name} — ${o.city}`,
+            parentOrganization: { "@id": `${SITE.url}#organization` },
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: o.streetAddress,
+              addressLocality: o.locality,
+              addressRegion: o.region,
+              postalCode: o.postalCode,
+              addressCountry: o.country,
+            },
+            ...(o.geo
+              ? {
+                  geo: {
+                    "@type": "GeoCoordinates",
+                    latitude: o.geo.lat,
+                    longitude: o.geo.lng,
+                  },
+                }
+              : {}),
+            areaServed: SITE.areaServed,
+          }}
+        />
+      ))}
+    </>
   );
 }
 
