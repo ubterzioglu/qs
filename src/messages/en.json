@@ -86,5 +86,12 @@
     "privacy": "Privacy",
     "cookies": "Cookie Policy"
   },
-  "common": { "backHome": "Back to home", "notFound": "Page not found", "loading": "Loading" }
+  "common": {
+    "backHome": "Back to home",
+    "notFound": "Page not found",
+    "loading": "Loading",
+    "notFoundHint": "The page you're looking for has moved, been renamed, or never existed. Let's get you back on course.",
+    "notFoundServices": "View services",
+    "notFoundContact": "Contact us"
+  }
 }

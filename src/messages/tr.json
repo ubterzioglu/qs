@@ -86,5 +86,12 @@
     "privacy": "Gizlilik",
     "cookies": "Çerez Politikası"
   },
-  "common": { "backHome": "Anasayfaya dön", "notFound": "Sayfa bulunamadı", "loading": "Yükleniyor" }
+  "common": {
+    "backHome": "Anasayfaya dön",
+    "notFound": "Sayfa bulunamadı",
+    "loading": "Yükleniyor",
+    "notFoundHint": "Aradığınız sayfa taşınmış, yeniden adlandırılmış ya da hiç var olmamış olabilir. Sizi doğru rotaya geri alalım.",
+    "notFoundServices": "Hizmetleri görüntüle",
+    "notFoundContact": "Bize ulaşın"
+  }
 }
