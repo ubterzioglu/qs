@@ -8,6 +8,13 @@ const nextConfig: NextConfig = {
   // Emit a self-contained server bundle (.next/standalone) for a small Docker image.
   output: "standalone",
   async redirects() {
+    // TEMP: homepage -> old Wix site while the new build is finished.
+    // Remove this block to restore the Next.js homepage; rest of the site is untouched.
+    const homeRedirect = [
+      { source: "/", destination: "https://burakakcakanat2.wixsite.com/qualtron-sinclair", permanent: false },
+      { source: "/tr", destination: "https://burakakcakanat2.wixsite.com/qualtron-sinclair", permanent: false },
+    ];
+
     // Old Wix slugs -> new structure (301). Locale-agnostic; next-intl adds prefix.
     const map: Array<[string, string]> = [
       ["/legal-compliance", "/services/legal-compliance"],
@@ -25,7 +32,7 @@ const nextConfig: NextConfig = {
       ["/post/qualtron-sinclair-yüksek-güven-ve-düşük-gürültülü-tasarım", "/insights/the-digital-fabric-of-cities-smart-ecosystems-and-civic-ai"],
       ["/post/:slug", "/insights/:slug"],
     ];
-    return map.map(([source, destination]) => ({ source, destination, permanent: true }));
+    return [...homeRedirect, ...map.map(([source, destination]) => ({ source, destination, permanent: true }))];
   },
 };
 
